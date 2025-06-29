@@ -6,6 +6,7 @@
     <title>Philippines GDP Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="analysis.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
@@ -245,13 +246,17 @@
 
             <div id="region-forecast-line" class="forecast-region-sub-content active">
                 <h4>Forecasted Regional GDP</h4>
-                <!-- Chart goes here -->
-            </div>
+                <div id="e531af21-7332-4cc8-8c88-e86095d078b8" class="plotly-graph-div"
+                    style="height:600px; width:100%;"></div>
 
-            <div id="region-growth-ranking" class="forecast-region-sub-content">
-                <h4>Future Leaders: Regions with Expected High Growth</h4>
-                <!-- Table/chart goes here -->
+                <script src="plots\Forcasted Regional GDP.js"></script>
             </div>
+        </div>
+
+        <div id="region-growth-ranking" class="forecast-region-sub-content">
+            <h4>Future Leaders: Regions with Expected High Growth</h4>
+            <!-- Table/chart goes here -->
+        </div>
         </div>
 
         <!-- === FORECAST BY INDUSTRY === -->
@@ -311,6 +316,8 @@
             </div>
         </div>
     </section>
+
+
     <footer>
         <p>&copy; 2025 GDP Dashboard | EDM Final Project | Cayabyab - Gamorot - Garcia - San Roque</p>
     </footer>

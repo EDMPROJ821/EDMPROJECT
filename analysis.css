@@ -75,8 +75,22 @@
       padding: 1rem;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      min-height: 400px;
+      min-height: 950px;
+      overflow: visible;
+      width: 90%;
+      max-width: 1600px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+
     }
+
+    #plotly-div {
+    width: 1600px !important; /* Force the width */
+    height: 800px !important; /* Force the height */
+    max-width: 100%; /* Make it responsive if needed */
+}
 
 
     .sub-tabs {
@@ -147,8 +161,8 @@
     .model-sub-content.active {
       display: block;
     }
-    
-    footer{
+
+    footer {
       background: #0052a5;
       color: white;
       text-align: center;
