@@ -147,8 +147,7 @@
     .model-sub-content.active {
       display: block;
     }
-
-
+    
     footer{
       background: #0052a5;
       color: white;
@@ -158,21 +157,3 @@
       bottom: 0;
       width: 100%;
     }
-
-
-    .desc-content, .pred-content {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  position: absolute;
-  width: 100%;
-  visibility: hidden;
-}
-
-.desc-content.active,
-.pred-content.active {
-  opacity: 1;
-  transform: translateY(0);
-  visibility: visible;
-  position: relative;
-}
