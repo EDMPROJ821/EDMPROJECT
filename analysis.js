@@ -45,3 +45,82 @@ const mainLinks = document.querySelectorAll(".main-link");
       document.getElementById(tabId).classList.add("active");
     });
   });
+
+  function setupSubTabs(tabGroup, tabBtnClass, contentClass) {
+  document.querySelectorAll(`.${tabBtnClass}`).forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll(`.${tabBtnClass}`).forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      document.querySelectorAll(`.${contentClass}`).forEach(content => content.classList.remove('active'));
+      const targetId = button.getAttribute('data-target');
+      document.getElementById(targetId).classList.add('active');
+    });
+  });
+}
+
+// Init all sub-tab groups
+setupSubTabs('region', 'region-sub-tab', 'region-sub-content');
+setupSubTabs('industry', 'industry-sub-tab', 'industry-sub-content');
+setupSubTabs('growth', 'growth-sub-tab', 'growth-sub-content');
+setupSubTabs('share', 'share-sub-tab', 'share-sub-content');
+
+// Main tab switch logic (existing)
+document.querySelectorAll('.desc-tab').forEach(mainTab => {
+  mainTab.addEventListener('click', () => {
+    document.querySelectorAll('.desc-tab').forEach(t => t.classList.remove('active'));
+    mainTab.classList.add('active');
+
+    document.querySelectorAll('.desc-content').forEach(c => c.classList.remove('active'));
+    const target = mainTab.getAttribute('data-tab');
+    document.getElementById(`desc-${target}`).classList.add('active');
+  });
+});
+
+  // MAIN TAB SWITCHING
+  document.querySelectorAll('.desc-tab').forEach(mainTab => {
+    mainTab.addEventListener('click', () => {
+      // Remove 'active' class from all main tabs
+      document.querySelectorAll('.desc-tab').forEach(t => t.classList.remove('active'));
+      // Add 'active' to clicked main tab
+      mainTab.classList.add('active');
+
+      // Hide all .desc-content sections
+      document.querySelectorAll('.desc-content').forEach(section => section.classList.remove('active'));
+
+      // Show only the matching tab section
+      const target = mainTab.getAttribute('data-tab');
+      document.getElementById(`desc-${target}`).classList.add('active');
+    });
+  });
+
+
+   function setupSubTabs(tabGroup, tabBtnClass, contentClass) {
+    document.querySelectorAll(`.${tabBtnClass}`).forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll(`.${tabBtnClass}`).forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        document.querySelectorAll(`.${contentClass}`).forEach(content => content.classList.remove('active'));
+        const targetId = button.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+  }
+
+  // Predictive main tabs
+  document.querySelectorAll('.pred-tab').forEach(mainTab => {
+    mainTab.addEventListener('click', () => {
+      document.querySelectorAll('.pred-tab').forEach(t => t.classList.remove('active'));
+      mainTab.classList.add('active');
+
+      document.querySelectorAll('.pred-content').forEach(c => c.classList.remove('active'));
+      const target = mainTab.getAttribute('data-tab');
+      document.getElementById(`pred-${target}`).classList.add('active');
+    });
+  });
+
+  // Setup predictive sub-tab groups
+  setupSubTabs('forecast-region', 'forecast-region-sub-tab', 'forecast-region-sub-content');
+  setupSubTabs('forecast-industry', 'forecast-industry-sub-tab', 'forecast-industry-sub-content');
+  setupSubTabs('model-summary', 'model-sub-tab', 'model-sub-content');

@@ -40,37 +40,34 @@
 
         <p>
             Understanding GDP by region and industry helps us:
+        </p>
         <ul>
             <li>Identify economic strengths and weaknesses across the country</li>
             <li>Track regional and industrial growth patterns over time</li>
             <li>Support policy planning and investment decisions</li>
             <li>Visualize the contribution of each province to national development</li>
         </ul>
-        </p>
+
+        <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
 
         <div style="margin-top: 20px;">
-            <h3>📽️ What is GDP? (3-Minute Explanation)</h3>
-            <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; margin-top:10px;">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/Xf5gZoRkEWw"
-                    title="What is GDP? Simple Explanation" frameborder="0" allowfullscreen
-                    style="position:absolute; top:0; left:0; width:100%; height:100%;">
-                </iframe>
+            <h3>📽️ What is GDP? (4-Minute Explanation)</h3>
+            <div style="max-width: 1000px; margin: 10px auto 30px auto;">
+                <video controls width="100%" style="border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <source src="assets/gdp_vid.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
 
-        <div style="margin-top: 40px;">
-            <h3>🗺️ Sample Visual: GDP by Region</h3>
-            <img src="assets/sample_gdp_map.png" alt="Philippine GDP by Region Map"
-                style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <p style="font-size: 0.9rem; color: #555;">Map illustration of GDP concentration by region (2018–2023)</p>
-        </div>
+        <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
     </section>
 
 
     <!-- SECTION: DESCRIPTIVE ANALYSIS -->
     <section id="descriptive">
-        <h2>Descriptive Analysis</h2>
+        <h2>📊 Descriptive Analysis</h2>
 
+        <!-- Main Tabs -->
         <div class="nested-tabs">
             <button class="desc-tab active" data-tab="region">By Region</button>
             <button class="desc-tab" data-tab="industry">By Industry</button>
@@ -78,53 +75,219 @@
             <button class="desc-tab" data-tab="share">Percentage Share</button>
         </div>
 
+        <!-- === REGION TAB === -->
         <div id="desc-region" class="chart-container desc-content active">
-            <h3>GDP by Region</h3>
-            <!-- Paste Region chart HTML here -->
+            <h3>🔹 By Region</h3>
+            <p><strong>Goal:</strong> Highlight how different regions contribute and perform economically.</p>
+
+            <div class="sub-tabs">
+                <button class="region-sub-tab active" data-target="region-industries">Top Thriving Industries</button>
+                <button class="region-sub-tab" data-target="region-contribution">GDP Contribution</button>
+                <button class="region-sub-tab" data-target="region-trend">Regional GDP Trend</button>
+                <button class="region-sub-tab" data-target="region-growth-map">Growth Map</button>
+                <button class="region-sub-tab" data-target="region-province-share">Province Contribution</button>
+            </div>
+
+            <div id="region-industries" class="region-sub-content active">
+                <h4>Top Thriving Industries in Each Region</h4>
+            </div>
+
+            <div id="region-contribution" class="region-sub-content">
+                <h4>GDP Contribution per Region</h4>
+            </div>
+
+            <div id="region-trend" class="region-sub-content">
+                <h4>Total GDP of Each Region per Year (2018–2023)</h4>
+            </div>
+
+            <div id="region-growth-map" class="region-sub-content">
+                <h4>Growth Rate Map (2023 vs. 2018)</h4>
+            </div>
+
+            <div id="region-province-share" class="region-sub-content">
+                <h4>Province Contribution to Regional GDP</h4>
+            </div>
         </div>
 
+        <!-- === INDUSTRY TAB === -->
         <div id="desc-industry" class="chart-container desc-content">
-            <h3>GDP by Industry</h3>
-            <!-- Paste Industry chart HTML here -->
+            <h3>🔹 By Industry</h3>
+            <p><strong>Goal:</strong> Analyze industries nationally across all regions and provinces.</p>
+
+            <div class="sub-tabs">
+                <button class="industry-sub-tab active" data-target="industry-top">Top 10 Regions per Industry</button>
+                <button class="industry-sub-tab" data-target="industry-lowest">Lowest 10 Regions per Industry</button>
+                <button class="industry-sub-tab" data-target="industry-composition">GDP Composition</button>
+                <button class="industry-sub-tab" data-target="industry-trend">Trend by Industry</button>
+                <button class="industry-sub-tab" data-target="industry-heatmap">GDP Heatmap</button>
+            </div>
+
+            <div id="industry-top" class="industry-sub-content active">
+                <h4>Top 10 Regions by GDP in Industries</h4>
+            </div>
+
+            <div id="industry-lowest" class="industry-sub-content">
+                <h4>Lowest 10 Regions in Industries</h4>
+            </div>
+
+            <div id="industry-composition" class="industry-sub-content">
+                <h4>National GDP Composition by Industry</h4>
+            </div>
+
+            <div id="industry-trend" class="industry-sub-content">
+                <h4>GDP Trend by Industry (2018–2023)</h4>
+            </div>
+
+            <div id="industry-heatmap" class="industry-sub-content">
+                <h4>GDP Heatmap: Regions vs. Industries</h4>
+            </div>
         </div>
 
+        <!-- === GROWTH TAB === -->
         <div id="desc-growth" class="chart-container desc-content">
-            <h3>Growth Report</h3>
-            <!-- Paste Growth chart HTML here -->
+            <h3>🔹 Growth Report</h3>
+            <p><strong>Goal:</strong> Focus on GDP growth rates over time.</p>
+
+            <div class="sub-tabs">
+                <button class="growth-sub-tab active" data-target="growth-2year">2-Year Comparison</button>
+                <button class="growth-sub-tab" data-target="growth-over-time">Growth Over Time</button>
+                <button class="growth-sub-tab" data-target="growth-fastest">Fastest/Shrinking Regions</button>
+                <button class="growth-sub-tab" data-target="growth-leaders">Industry Growth Leaders</button>
+            </div>
+
+            <div id="growth-2year" class="growth-sub-content active">
+                <h4>2-Year Growth Comparison (2018–2023)</h4>
+            </div>
+
+            <div id="growth-over-time" class="growth-sub-content">
+                <h4>Growth Rate Over Time by Region</h4>
+            </div>
+
+            <div id="growth-fastest" class="growth-sub-content">
+                <h4>Fastest-Growing vs. Shrinking Regions</h4>
+            </div>
+
+            <div id="growth-leaders" class="growth-sub-content">
+                <h4>Industry Growth Leaders</h4>
+            </div>
         </div>
 
+        <!-- === PERCENTAGE SHARE TAB === -->
         <div id="desc-share" class="chart-container desc-content">
-            <h3>Percentage Share</h3>
-            <!-- Paste Share chart HTML here -->
+            <h3>🔹 Percentage Share</h3>
+            <p><strong>Goal:</strong> Emphasize each province’s share of the regional economy.</p>
+
+            <div class="sub-tabs">
+                <button class="share-sub-tab active" data-target="share-province">Province Share (2018–2023)</button>
+                <button class="share-sub-tab" data-target="share-change">Change Over Time</button>
+                <button class="share-sub-tab" data-target="share-gap">Growth Gap</button>
+            </div>
+
+            <div id="share-province" class="share-sub-content active">
+                <h4>Province GDP Share Within Region</h4>
+            </div>
+
+            <div id="share-change" class="share-sub-content">
+                <h4>Change in Percent Share Over Time</h4>
+            </div>
+
+            <div id="share-gap" class="share-sub-content">
+                <h4>Province vs. Regional Growth Gap</h4>
+            </div>
         </div>
     </section>
 
-    <!-- SECTION: PREDICTIVE TRENDS -->
-    <section id="predictive">
-        <h2>Predictive Trends</h2>
 
+    <section id="predictive">
+        <h2>🔮 Predictive Trends</h2>
+
+        <!-- Main Tabs -->
         <div class="nested-tabs">
             <button class="pred-tab active" data-tab="forecast-region">Forecast by Region</button>
             <button class="pred-tab" data-tab="forecast-industry">Forecast by Industry</button>
             <button class="pred-tab" data-tab="model-summary">Model Summary</button>
         </div>
 
+        <!-- === FORECAST BY REGION === -->
         <div id="pred-forecast-region" class="chart-container pred-content active">
-            <h3>Forecast by Region</h3>
-            <!-- Forecast Region Chart goes here -->
+            <h3>🔹 Forecast by Region</h3>
+            <p><strong>Goal:</strong> Show what GDP might look like in 2024–2025.</p>
+
+            <div class="sub-tabs">
+                <button class="forecast-region-sub-tab active" data-target="region-forecast-line">Forecasted Regional
+                    GDP</button>
+                <button class="forecast-region-sub-tab" data-target="region-growth-ranking">Future Leaders (Growth
+                    Ranking)</button>
+            </div>
+
+            <div id="region-forecast-line" class="forecast-region-sub-content active">
+                <h4>Forecasted Regional GDP</h4>
+                <!-- Chart goes here -->
+            </div>
+
+            <div id="region-growth-ranking" class="forecast-region-sub-content">
+                <h4>Future Leaders: Regions with Expected High Growth</h4>
+                <!-- Table/chart goes here -->
+            </div>
         </div>
 
+        <!-- === FORECAST BY INDUSTRY === -->
         <div id="pred-forecast-industry" class="chart-container pred-content">
-            <h3>Forecast by Industry</h3>
-            <!-- Forecast Industry Chart goes here -->
+            <h3>🔹 Forecast by Industry</h3>
+            <p><strong>Goal:</strong> See how sectors are expected to perform.</p>
+
+            <div class="sub-tabs">
+                <button class="forecast-industry-sub-tab active" data-target="industry-region-forecast">Industry GDP
+                    Forecast by Region</button>
+                <button class="forecast-industry-sub-tab" data-target="industry-national-forecast">National-Level
+                    Projection</button>
+                <button class="forecast-industry-sub-tab" data-target="industry-yoy-growth">Year-over-Year
+                    Growth</button>
+            </div>
+
+            <div id="industry-region-forecast" class="forecast-industry-sub-content active">
+                <h4>Industry GDP Forecast per Region</h4>
+                <!-- Chart goes here -->
+            </div>
+
+            <div id="industry-national-forecast" class="forecast-industry-sub-content">
+                <h4>National-Level Industry Projection</h4>
+                <!-- Chart goes here -->
+            </div>
+
+            <div id="industry-yoy-growth" class="forecast-industry-sub-content">
+                <h4>Year-over-Year Projected Growth (2023–2025)</h4>
+                <!-- Chart goes here -->
+            </div>
         </div>
 
+        <!-- === MODEL SUMMARY === -->
         <div id="pred-model-summary" class="chart-container pred-content">
-            <h3>Model Summary</h3>
-            <!-- Model details, tables, or output chart goes here -->
+            <h3>🔹 Model Summary</h3>
+            <p><strong>Goal:</strong> Explain forecasting methods and limitations.</p>
+
+            <div class="sub-tabs">
+                <button class="model-sub-tab active" data-target="model-type">Model Used</button>
+                <button class="model-sub-tab" data-target="model-accuracy">Model Accuracy</button>
+                <button class="model-sub-tab" data-target="model-assumptions">Assumptions & Limitations</button>
+            </div>
+
+            <div id="model-type" class="model-sub-content active">
+                <h4>Model Used</h4>
+                <!-- Description goes here -->
+            </div>
+
+            <div id="model-accuracy" class="model-sub-content">
+                <h4>Accuracy Metrics</h4>
+                <!-- Chart/table -->
+            </div>
+
+            <div id="model-assumptions" class="model-sub-content">
+                <h4>Forecast Assumptions and Limitations</h4>
+                <!-- Content block -->
+            </div>
         </div>
     </section>
-
     <footer>
         <p>&copy; 2025 GDP Dashboard Final Project | Cayabyab - Gamorot - Garcia - San Roque</p>
     </footer>
