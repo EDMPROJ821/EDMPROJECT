@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippine GDP - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <style>
+        /* Full-screen background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('assets/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        /* Overlay */
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px 60px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+        }
+
+        .overlay h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .overlay a {
+            display: inline-block;
+            margin: 10px 20px;
+            padding: 12px 24px;
+            font-size: 1em;
+            text-decoration: none;
+            background-color: #ffcc00;
+            color: #000;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .overlay a:hover {
+            background-color: #e6b800;
+        }
+    </style>
+    <div class="overlay">
+        <h1>Philippine GDP – by Province and HUCs</h1>
+        <a href="analysis.html">📊 Go to Data Analysis</a>
+        <a href="data/gdp_data.xlsx" download>📥 Download Excel Data</a>
+    </div>
+</body>
+</html>
