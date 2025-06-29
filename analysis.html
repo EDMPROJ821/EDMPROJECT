@@ -1,11 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <title>Philippines GDP Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDM Project</title>
+    <link rel="stylesheet" href="analysis.css">
 </head>
+
 <body>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aspernatur libero a nulla. Libero adipisci magnam est placeat natus fuga aut dolores reprehenderit quae quam et laborum impedit, ab ipsa.
+    <header>
+        <h1>🇵🇭 Philippine GDP Analysis</h1>
+        <p>Overview, Descriptive Reports, and Predictive Trends</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview" class="main-link active">Overview</a></li>
+            <li><a href="#descriptive" class="main-link">Descriptive Analysis</a></li>
+            <li><a href="#predictive" class="main-link">Predictive Trends</a></li>
+        </ul>
+    </nav>
+
+    <!-- SECTION: OVERVIEW -->
+    <section id="overview" class="active">
+        <h2>Overview</h2>
+        <p>This page provides a detailed view of the Philippine GDP, categorized by Province and Highly Urbanized Cities
+            (HUCs). Explore descriptive charts and future trend projections below.</p>
+    </section>
+
+    <!-- SECTION: DESCRIPTIVE ANALYSIS -->
+    <section id="descriptive">
+        <h2>Descriptive Analysis</h2>
+
+        <div class="nested-tabs">
+            <button class="desc-tab active" data-tab="region">By Region</button>
+            <button class="desc-tab" data-tab="industry">By Industry</button>
+            <button class="desc-tab" data-tab="growth">Growth Report</button>
+            <button class="desc-tab" data-tab="share">Percentage Share</button>
+        </div>
+
+        <div id="desc-region" class="chart-container desc-content active">
+            <h3>GDP by Region</h3>
+            <!-- Paste Region chart HTML here -->
+        </div>
+
+        <div id="desc-industry" class="chart-container desc-content">
+            <h3>GDP by Industry</h3>
+            <!-- Paste Industry chart HTML here -->
+        </div>
+
+        <div id="desc-growth" class="chart-container desc-content">
+            <h3>Growth Report</h3>
+            <!-- Paste Growth chart HTML here -->
+        </div>
+
+        <div id="desc-share" class="chart-container desc-content">
+            <h3>Percentage Share</h3>
+            <!-- Paste Share chart HTML here -->
+        </div>
+    </section>
+
+    <!-- SECTION: PREDICTIVE TRENDS -->
+    <section id="predictive">
+        <h2>Predictive Trends</h2>
+
+        <div class="nested-tabs">
+            <button class="pred-tab active" data-tab="forecast-region">Forecast by Region</button>
+            <button class="pred-tab" data-tab="forecast-industry">Forecast by Industry</button>
+            <button class="pred-tab" data-tab="model-summary">Model Summary</button>
+        </div>
+
+        <div id="pred-forecast-region" class="chart-container pred-content active">
+            <h3>Forecast by Region</h3>
+            <!-- Forecast Region Chart goes here -->
+        </div>
+
+        <div id="pred-forecast-industry" class="chart-container pred-content">
+            <h3>Forecast by Industry</h3>
+            <!-- Forecast Industry Chart goes here -->
+        </div>
+
+        <div id="pred-model-summary" class="chart-container pred-content">
+            <h3>Model Summary</h3>
+            <!-- Model details, tables, or output chart goes here -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 GDP Dashboard Final Project | Cayabyab - Gamorot - Garcia - San Roque</p>
+    </footer>
+
+    <script src="analysis.js"></script>
+
 </body>
+
 </html>
