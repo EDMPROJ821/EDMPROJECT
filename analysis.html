@@ -177,6 +177,7 @@
                 <button class="growth-sub-tab" data-target="growth-over-time">Growth Over Time</button>
                 <button class="growth-sub-tab" data-target="growth-fastest">Fastest/Shrinking Regions</button>
                 <button class="growth-sub-tab" data-target="growth-leaders">Industry Growth Leaders</button>
+                <button class="share-sub-tab" data-target="share-gap">Growth Gap</button>
             </div>
 
             <div id="growth-2year" class="growth-sub-content active">
@@ -194,6 +195,10 @@
             <div id="growth-leaders" class="growth-sub-content">
                 <h4>Industry Growth Leaders</h4>
             </div>
+
+            <div id="share-gap" class="share-sub-content">
+                <h4>Province vs. Regional Growth Gap</h4>
+            </div>
         </div>
 
         <!-- === PERCENTAGE SHARE TAB === -->
@@ -204,22 +209,20 @@
             <div class="sub-tabs">
                 <button class="share-sub-tab active" data-target="share-province">Province Share (2018–2023)</button>
                 <button class="share-sub-tab" data-target="share-change">Change Over Time</button>
-                <button class="share-sub-tab" data-target="share-gap">Growth Gap</button>
             </div>
 
             <div id="share-province" class="share-sub-content active">
                 <h4>Province GDP Share Within Region</h4>
-                <iframe src="plots\Descriptive\gdp_share_by_region_year.html" style="height: 600px; width: 80%; border: none;"
+                <iframe src="plots\Descriptive\gdp_share_by_region_year.html" style="height: 550px; width: 100%; border: none;"
                     frameborder="0" loading="lazy"></iframe>
             </div>
 
             <div id="share-change" class="share-sub-content">
                 <h4>Change in Percent Share Over Time</h4>
+                <iframe src="plots\Descriptive\share-line.html"
+                    style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
             </div>
 
-            <div id="share-gap" class="share-sub-content">
-                <h4>Province vs. Regional Growth Gap</h4>
-            </div>
         </div>
     </section>
 
@@ -293,7 +296,7 @@
             <div id="industry-yoy-growth" class="forecast-industry-sub-content">
                 <h4>Year-over-Year Projected Growth (2023–2025)</h4>
                 <iframe src="plots\Predictive\National_Industry_GDP_Forecast.html"
-                    style="height: 600px; width: 90%; border: none;" frameborder="0" loading="lazy"></iframe>
+                    style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
             </div>
         </div>
 
