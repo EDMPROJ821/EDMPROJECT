@@ -237,28 +237,31 @@
             <h3>🔹 Forecast by Region</h3>
             <p><strong>Goal:</strong> Show what GDP might look like in 2024–2025.</p>
 
+            <!-- Sub-tabs for forecast region -->
             <div class="sub-tabs">
-                <button class="forecast-region-sub-tab active" data-target="region-forecast-line">Forecasted Regional
-                    GDP</button>
-                <button class="forecast-region-sub-tab" data-target="region-growth-ranking">Future Leaders (Growth
-                    Ranking)</button>
+                <button class="forecast-region-sub-tab active" data-target="region-forecast-line">
+                    Forecasted Regional GDP
+                </button>
+                <button class="forecast-region-sub-tab" data-target="region-growth-ranking">
+                    Future Leaders (Growth Ranking)
+                </button>
             </div>
 
+            <!-- Sub-tab content: Forecasted Regional GDP -->
             <div id="region-forecast-line" class="forecast-region-sub-content active">
                 <h4>Forecasted Regional GDP</h4>
                 <div id="e531af21-7332-4cc8-8c88-e86095d078b8" class="plotly-graph-div"
                     style="height:600px; width:100%;"></div>
+                <script src="plots\Predictive/Forcasted Regional GDP.js"></script>
+            </div>
 
-                <script src="plots\Forcasted Regional GDP.js"></script>
+            <!-- Sub-tab content: Future Leaders -->
+            <div id="region-growth-ranking" class="forecast-region-sub-content">
+                <h4>Future Leaders: Regions with Expected High Growth</h4>
+                <iframe src="plots\Predictive/Future Leaders.html" style="height: 600px; width: 100%; border: none;"
+                    frameborder="0" loading="lazy"></iframe>
             </div>
         </div>
-
-        <div id="region-growth-ranking" class="forecast-region-sub-content">
-            <h4>Future Leaders: Regions with Expected High Growth</h4>
-            <!-- Table/chart goes here -->
-        </div>
-        </div>
-
         <!-- === FORECAST BY INDUSTRY === -->
         <div id="pred-forecast-industry" class="chart-container pred-content">
             <h3>🔹 Forecast by Industry</h3>
@@ -275,17 +278,20 @@
 
             <div id="industry-region-forecast" class="forecast-industry-sub-content active">
                 <h4>Industry GDP Forecast per Region</h4>
-                <!-- Chart goes here -->
+                <iframe src="plots\Predictive\Industry_Projected_Growth_Rate_Ranking_2024_2025.html"
+                    style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
             </div>
 
             <div id="industry-national-forecast" class="forecast-industry-sub-content">
                 <h4>National-Level Industry Projection</h4>
-                <!-- Chart goes here -->
+                <iframe src="plots\Predictive\Total_GDP_Forecast_Line.html"
+                    style="height: 600px; width: 90%; border: none;" frameborder="0" loading="lazy"></iframe>
             </div>
 
             <div id="industry-yoy-growth" class="forecast-industry-sub-content">
                 <h4>Year-over-Year Projected Growth (2023–2025)</h4>
-                <!-- Chart goes here -->
+                <iframe src="plots\Predictive\National_Industry_GDP_Forecast.html"
+                    style="height: 600px; width: 90%; border: none;" frameborder="0" loading="lazy"></iframe>
             </div>
         </div>
 
@@ -294,27 +300,88 @@
             <h3>🔹 Model Summary</h3>
             <p><strong>Goal:</strong> Explain forecasting methods and limitations.</p>
 
+            <!-- Sub-tabs -->
             <div class="sub-tabs">
                 <button class="model-sub-tab active" data-target="model-type">Model Used</button>
                 <button class="model-sub-tab" data-target="model-accuracy">Model Accuracy</button>
                 <button class="model-sub-tab" data-target="model-assumptions">Assumptions & Limitations</button>
             </div>
 
+            <!-- Tab: Model Used -->
             <div id="model-type" class="model-sub-content active">
-                <h4>Model Used</h4>
-                <!-- Description goes here -->
+                <h4>Model Used: Facebook Prophet</h4>
+                <p>
+                    The forecasts in this dashboard were generated using <strong>Facebook Prophet</strong>, a powerful
+                    open-source time-series forecasting library developed by Meta.
+                </p>
+                <ul>
+                    <li>Works well with historical yearly GDP data</li>
+                    <li>Captures trends and seasonality automatically</li>
+                    <li>Handles missing values and outliers robustly</li>
+                    <li>Widely used in business forecasting for its interpretability</li>
+                </ul>
+                <p>
+                    Prophet models time-series as an additive model:
+                    <code>y(t) = trend(t) + seasonality(t) + holidays(t) + error</code>
+                </p>
             </div>
 
-            <div id="model-accuracy" class="model-sub-content">
+            <!-- Tab: Model Accuracy -->
+            <!-- <div id="model-accuracy" class="model-sub-content">
                 <h4>Accuracy Metrics</h4>
-                <!-- Chart/table -->
-            </div>
+                <p>To assess model performance, we computed standard forecasting accuracy metrics:</p>
+                <ul>
+                    <li><strong>MAPE (Mean Absolute Percentage Error):</strong> Measures prediction accuracy as a
+                        percentage. Lower is better.</li>
+                    <li><strong>R² Score (Coefficient of Determination):</strong> Indicates how well the model fits
+                        historical data. Closer to 1.0 means better fit.</li>
+                </ul>
 
+                <p>📊 <em>Sample Results (for illustration):</em></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Region/Industry</th>
+                            <th>MAPE (%)</th>
+                            <th>R² Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Manufacturing</td>
+                            <td>6.21</td>
+                            <td>0.947</td>
+                        </tr>
+                        <tr>
+                            <td>Services</td>
+                            <td>4.83</td>
+                            <td>0.976</td>
+                        </tr>
+                        <tr>
+                            <td>Agriculture</td>
+                            <td>9.12</td>
+                            <td>0.892</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+
+            <!-- Tab: Assumptions & Limitations -->
             <div id="model-assumptions" class="model-sub-content">
                 <h4>Forecast Assumptions and Limitations</h4>
-                <!-- Content block -->
+                <p>The forecasts are subject to several assumptions and limitations:</p>
+                <ul>
+                    <li>📅 Data assumes consistent trends and patterns will persist</li>
+                    <li>📉 Effects of inflation, policy shifts, or global crises are not explicitly modeled</li>
+                    <li>🔢 Some provinces or sectors have limited historical data, reducing forecast precision</li>
+                    <li>📈 GDP values are forecasted purely from historical trends without macroeconomic predictors</li>
+                    <li>🧠 Human factors and unpredictable external shocks (e.g., pandemics, conflicts) are not included
+                    </li>
+                </ul>
+                <p><strong>Use these projections as trend indicators, not absolute predictions.</strong></p>
             </div>
         </div>
+
     </section>
 
 

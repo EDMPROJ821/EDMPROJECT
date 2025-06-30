@@ -87,9 +87,9 @@
     }
 
     #plotly-div {
-    width: 1600px !important; /* Force the width */
-    height: 800px !important; /* Force the height */
-    max-width: 100%; /* Make it responsive if needed */
+    width: 1600px !important;
+    height: 800px !important; 
+    max-width: 100%; 
 }
 
 
