@@ -29,6 +29,7 @@ body {
   font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
   font-size: 16px;
   line-height: 1.6;
+    background: url('assets\bg-blue.jpg') no-repeat cover center center fixed;
 }
 
 
