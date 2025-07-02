@@ -133,13 +133,6 @@ section.active {
 
 }
 
-#plotly-div {
-  width: 1600px !important;
-  height: 800px !important;
-  max-width: 100%;
-}
-
-
 .sub-tabs {
   margin: 15px 0;
   display: flex;
