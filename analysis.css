@@ -29,7 +29,13 @@ body {
   font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-    background: url('assets\bg-blue.jpg') no-repeat cover center center fixed;
+  margin: 0;
+  /* background-image: url('assets/bg-blue.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed; */
+
 }
 
 
@@ -116,6 +122,11 @@ section.active {
   color: white;
 }
 
+.nested-tabs button:hover {
+  background: #0052a5;
+  color: white;
+}
+
 .chart-container {
   background: white;
   padding: 1rem;
@@ -153,6 +164,11 @@ section.active {
 }
 
 .sub-tabs button.active {
+  background-color: #0052a5;
+  color: white;
+}
+
+.sub-tabs button:hover {
   background-color: #0052a5;
   color: white;
 }
