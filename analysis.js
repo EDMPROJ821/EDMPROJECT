@@ -124,3 +124,33 @@ document.querySelectorAll('.desc-tab').forEach(mainTab => {
   setupSubTabs('forecast-region', 'forecast-region-sub-tab', 'forecast-region-sub-content');
   setupSubTabs('forecast-industry', 'forecast-industry-sub-tab', 'forecast-industry-sub-content');
   setupSubTabs('model-summary', 'model-sub-tab', 'model-sub-content');
+
+  function fadeIn(element) {
+  element.style.opacity = 0;
+  element.style.display = 'block';
+
+  let opacity = 0;
+  const fade = setInterval(() => {
+    opacity += 0.05;
+    element.style.opacity = opacity;
+    if (opacity >= 1) clearInterval(fade);
+  }, 10);
+}
+
+function fadeToTab(tabClass, contentClass) {
+  document.querySelectorAll(`.${tabClass}`).forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const targetEl = document.getElementById(targetId);
+
+      document.querySelectorAll(`.${contentClass}`).forEach(el => {
+        el.style.display = 'none';
+      });
+
+      fadeIn(targetEl);
+    });
+  });
+}
+
+// Example usage:
+fadeToTab('region-sub-tab', 'region-sub-content');

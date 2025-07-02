@@ -6,13 +6,14 @@
     <title>Philippines GDP Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="analysis.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather:wght@700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
     <header>
-        <h1>🇵🇭 Philippine GDP Analysis</h1>
-        <p>Overview, Descriptive Reports, and Predictive Trends</p>
+        <h1>Philippine GDP Analysis</h1>
     </header>
 
     <nav>
@@ -27,7 +28,7 @@
     <section id="overview" class="active">
         <h2>Overview: Understanding Philippine GDP</h2>
         <p style="font-style: italic; color: #555;">
-            A visual exploration of how the Philippine economy has evolved across provinces and industries — and where
+            A visual exploration of how the Philippine economy has evolved across regions, provinces and industries — and where
             it's heading.
         </p>
 
@@ -114,22 +115,59 @@
 
             <div id="region-industries" class="region-sub-content active">
                 <h4>Top Thriving Industries in Each Region</h4>
+                <iframe src="plots\Descriptive\region\region_1_top_thriving_industries.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+
             </div>
 
             <div id="region-contribution" class="region-sub-content">
                 <h4>GDP Contribution per Region</h4>
+                <iframe src="plots\Descriptive\region\region_2_gdp_contribution_pie.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="region-trend" class="region-sub-content">
                 <h4>Total GDP of Each Region per Year (2018–2023)</h4>
+                <iframe src="plots\Descriptive\region\region_4_total_gdp_by_year.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="region-growth-map" class="region-sub-content">
                 <h4>Growth Rate Map (2023 vs. 2018)</h4>
+                <iframe src="plots\Descriptive\region\region_7_growth_rate_choropleth.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="region-province-share" class="region-sub-content">
                 <h4>Province Contribution to Regional GDP</h4>
+                <iframe src="plots\Descriptive\region\region_8_province_contribution_bar.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
         </div>
 
@@ -148,22 +186,57 @@
 
             <div id="industry-top" class="industry-sub-content active">
                 <h4>Top 10 Regions by GDP in Industries</h4>
+                <iframe src="plots\Descriptive\industry\industry_1_top_10_regions.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="industry-lowest" class="industry-sub-content">
                 <h4>Lowest 10 Regions in Industries</h4>
+                <iframe src="plots\Descriptive\industry\industry_2_lowest_10_regions.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="industry-composition" class="industry-sub-content">
                 <h4>National GDP Composition by Industry</h4>
+                <iframe src="plots\Descriptive\industry\industry_3_national_composition.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="industry-trend" class="industry-sub-content">
                 <h4>GDP Trend by Industry (2018–2023)</h4>
+                <iframe src="plots\Descriptive\industry\industry_6_trend_line.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="industry-heatmap" class="industry-sub-content">
                 <h4>GDP Heatmap: Regions vs. Industries</h4>
+                <iframe src="plots\Descriptive\industry\industry_7_regions_vs_industries_heatmap.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
         </div>
 
@@ -177,27 +250,62 @@
                 <button class="growth-sub-tab" data-target="growth-over-time">Growth Over Time</button>
                 <button class="growth-sub-tab" data-target="growth-fastest">Fastest/Shrinking Regions</button>
                 <button class="growth-sub-tab" data-target="growth-leaders">Industry Growth Leaders</button>
-                <button class="share-sub-tab" data-target="share-gap">Growth Gap</button>
+                <button class="growth-sub-tab" data-target="growth-gap">Growth Gap</button>
             </div>
 
             <div id="growth-2year" class="growth-sub-content active">
                 <h4>2-Year Growth Comparison (2018–2023)</h4>
+                <iframe src="plots\Descriptive\growth\growth_1_two_year_comparison.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="growth-over-time" class="growth-sub-content">
                 <h4>Growth Rate Over Time by Region</h4>
+                <iframe src="plots\Descriptive\growth\growth_2_growth_rate_over_time.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="growth-fastest" class="growth-sub-content">
                 <h4>Fastest-Growing vs. Shrinking Regions</h4>
+                <iframe src="plots\Descriptive\growth\growth_3_fastest_vs_shrinking.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="growth-leaders" class="growth-sub-content">
                 <h4>Industry Growth Leaders</h4>
+                <iframe src="plots\Descriptive\growth\growth_4_industry_growth_leaders.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
-            <div id="share-gap" class="share-sub-content">
+            <div id="growth-gap" class="growth-sub-content">
                 <h4>Province vs. Regional Growth Gap</h4>
+                <iframe src="plots\Descriptive\growth\growth_6_growth_gap_analysis.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
         </div>
 
@@ -213,14 +321,26 @@
 
             <div id="share-province" class="share-sub-content active">
                 <h4>Province GDP Share Within Region</h4>
-                <iframe src="plots\Descriptive\gdp_share_by_region_year.html" style="height: 550px; width: 100%; border: none;"
-                    frameborder="0" loading="lazy"></iframe>
+                <iframe src="plots\Descriptive\share\share_1_province_share_timeline.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="share-change" class="share-sub-content">
                 <h4>Change in Percent Share Over Time</h4>
-                <iframe src="plots\Descriptive\share-line.html"
+                <iframe src="plots\Descriptive\share\share_2_share_change_over_time.html"
                     style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
         </div>
@@ -258,6 +378,12 @@
                 <div id="e531af21-7332-4cc8-8c88-e86095d078b8" class="plotly-graph-div"
                     style="height:600px; width:100%;"></div>
                 <script src="plots\Predictive/Forcasted Regional GDP.js"></script>
+
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <!-- Sub-tab content: Future Leaders -->
@@ -265,6 +391,11 @@
                 <h4>Future Leaders: Regions with Expected High Growth</h4>
                 <iframe src="plots\Predictive/Future Leaders.html" style="height: 600px; width: 100%; border: none;"
                     frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
         </div>
         <!-- === FORECAST BY INDUSTRY === -->
@@ -285,18 +416,34 @@
                 <h4>Industry GDP Forecast per Region</h4>
                 <iframe src="plots\Predictive\Industry_Projected_Growth_Rate_Ranking_2024_2025.html"
                     style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="industry-national-forecast" class="forecast-industry-sub-content">
                 <h4>National-Level Industry Projection</h4>
                 <iframe src="plots\Predictive\Total_GDP_Forecast_Line.html"
                     style="height: 600px; width: 90%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
 
             <div id="industry-yoy-growth" class="forecast-industry-sub-content">
                 <h4>Year-over-Year Projected Growth (2023–2025)</h4>
                 <iframe src="plots\Predictive\National_Industry_GDP_Forecast.html"
                     style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+
+                <div class="summary-box">
+                    <h4>Key Insight:</h4>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
             </div>
         </div>
 
@@ -330,7 +477,7 @@
                 </p>
             </div>
 
-        
+
 
             <!-- Tab: Assumptions & Limitations -->
             <div id="model-assumptions" class="model-sub-content">
