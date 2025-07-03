@@ -31,15 +31,15 @@ class GDPAnalysisDashboard:
         print(f"Regions: {self.df['Region'].unique()}")
         print(f"Industries: {self.df['Industry'].unique()}")
         
-    # ==================== BY REGION TAB - 8 CHARTS ====================
+    # ==================== BY REGION TAB CHARTS ====================
     
-    def region_chart_1_top_thriving_industries(self):
+    def top_thriving_industries_by_region(self):
         """
-        Region Chart 1: Top Thriving Industries in Each Region
-        Shows the leading industries by GDP value in each region
+        Chart 1: Top Thriving Industries in Each Region
+        Creates a grouped bar chart showing top industries per region
         """
-        latest_year = self.df['Start_Year'].max()
-        latest_data = self.df[self.df['Start_Year'] == latest_year]
+        # Get latest year data for each region-industry combination
+        latest_data = self.df.loc[self.df.groupby(['Region', 'Industry'])['Start_Year'].idxmax()]
         
         # Get top 3 industries per region by GDP value
         top_industries = latest_data.groupby('Region').apply(
@@ -56,14 +56,20 @@ class GDPAnalysisDashboard:
             barmode='group'
         )
         
-        fig.update_layout(xaxis_tickangle=-45, height=600, showlegend=True)
+        fig.update_layout(
+            xaxis_tickangle=-45,
+            height=600,
+            showlegend=True
+        )
+        
         return fig
     
-    def region_chart_2_gdp_contribution_pie(self):
+    def gdp_contribution_per_region(self):
         """
-        Region Chart 2: GDP Contribution per Region (Pie Chart)
-        Shows each region's contribution to total national GDP
+        Chart 2: GDP Contribution per Region (Pie Chart)
+        Shows regional contribution to total national GDP
         """
+        # Sum GDP by region for latest available year
         latest_year = self.df['Start_Year'].max()
         regional_gdp = self.df[self.df['Start_Year'] == latest_year].groupby('Region')['Value'].sum().reset_index()
         
@@ -72,18 +78,20 @@ class GDPAnalysisDashboard:
             values='Value',
             names='Region',
             title=f'Regional GDP Contribution ({latest_year})',
-            hole=0.3
+            hole=0.3  # Creates a donut chart
         )
         
         fig.update_traces(textposition='inside', textinfo='percent+label')
         fig.update_layout(height=600)
+        
         return fig
     
-    def region_chart_3_gdp_contribution_stacked_bar(self):
+    def total_gdp_by_region_yearly(self):
         """
-        Region Chart 3: GDP Contribution per Region (Stacked Bar Chart)
-        Alternative visualization showing regional GDP contribution over time
+        Chart 3: Total GDP of each region per year (2018-2023)
+        Stacked bar chart showing regional GDP over time
         """
+        # Group by region and year, sum GDP values
         yearly_regional_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
         
         fig = px.bar(
@@ -91,41 +99,21 @@ class GDPAnalysisDashboard:
             x='Start_Year',
             y='Value',
             color='Region',
-            title='Regional GDP Contribution Over Time (Stacked Bar)',
+            title='Total GDP by Region (2018-2023)',
             labels={'Value': 'GDP Value (Billions)', 'Start_Year': 'Year'},
             barmode='stack'
         )
         
         fig.update_layout(height=600)
+        
         return fig
     
-    def region_chart_4_total_gdp_by_year(self):
+    def regional_gdp_trends(self):
         """
-        Region Chart 4: Total GDP of each region per year (2018-2023)
-        Shows individual regional GDP values across all years
+        Chart 4: Region-wise GDP Trends (Line Chart)
+        Shows GDP growth trends for each region over time
         """
-        yearly_regional_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
-        
-        fig = px.bar(
-            yearly_regional_gdp,
-            x='Start_Year',
-            y='Value',
-            color='Region',
-            title='Total GDP by Region per Year (2018-2023)',
-            labels={'Value': 'GDP Value (Billions)', 'Start_Year': 'Year'},
-            barmode='group',
-            facet_col='Region',
-            facet_col_wrap=3
-        )
-        
-        fig.update_layout(height=800)
-        return fig
-    
-    def region_chart_5_gdp_trends_line(self):
-        """
-        Region Chart 5: Region-wise GDP Trends (Line Chart)
-        Shows GDP evolution trends for each region over time
-        """
+        # Group by region and year, sum GDP values
         yearly_regional_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
         
         fig = px.line(
@@ -139,42 +127,19 @@ class GDPAnalysisDashboard:
         )
         
         fig.update_layout(height=600)
+        
         return fig
     
-    def region_chart_6_regional_gdp_growth_over_time(self):
+    def growth_rate_calculation(self):
         """
-        Region Chart 6: Regional GDP Growth Over Time
-        Shows year-over-year growth rates for each region
+        Chart 5: Growth Rate Map (2023 vs 2018)
+        Calculates and visualizes growth rates between 2018 and 2023
         """
-        yearly_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
-        yearly_gdp = yearly_gdp.sort_values(['Region', 'Start_Year'])
-        yearly_gdp['Growth_Rate'] = yearly_gdp.groupby('Region')['Value'].pct_change() * 100
-        
-        growth_data = yearly_gdp.dropna()
-        
-        fig = px.line(
-            growth_data,
-            x='Start_Year',
-            y='Growth_Rate',
-            color='Region',
-            title='Regional GDP Growth Rate Over Time',
-            labels={'Growth_Rate': 'Growth Rate (%)', 'Start_Year': 'Year'},
-            markers=True
-        )
-        
-        fig.add_hline(y=0, line_dash="dash", line_color="red")
-        fig.update_layout(height=600)
-        return fig
-    
-    def region_chart_7_growth_rate_choropleth_map(self):
-        """
-        Region Chart 7: Growth Rate Map (2023 vs 2018) - Choropleth
-        Shows regional growth rates on a map visualization
-        """
-        # Calculate growth rates between 2018 and 2023
+        # Get 2018 and 2023 data
         gdp_2018 = self.df[self.df['Start_Year'] == 2018].groupby('Region')['Value'].sum()
         gdp_2023 = self.df[self.df['Start_Year'] == 2023].groupby('Region')['Value'].sum()
         
+        # Calculate growth rate
         growth_data = pd.DataFrame({
             'Region': gdp_2018.index,
             'GDP_2018': gdp_2018.values,
@@ -184,25 +149,27 @@ class GDPAnalysisDashboard:
         growth_data['Growth_Rate'] = ((growth_data['GDP_2023'] - growth_data['GDP_2018']) / growth_data['GDP_2018'] * 100)
         growth_data = growth_data.dropna()
         
-        # Create a choropleth-style visualization using bar chart with color mapping
         fig = px.bar(
             growth_data,
             x='Region',
             y='Growth_Rate',
-            color='Growth_Rate',
-            title='Regional GDP Growth Rate Map (2023 vs 2018)',
+            title='Regional GDP Growth Rate (2023 vs 2018)',
             labels={'Growth_Rate': 'Growth Rate (%)', 'Region': 'Region'},
-            color_continuous_scale='RdYlGn',
-            color_continuous_midpoint=0
+            color='Growth_Rate',
+            color_continuous_scale='RdYlGn'
         )
         
-        fig.update_layout(xaxis_tickangle=-45, height=600)
+        fig.update_layout(
+            xaxis_tickangle=-45,
+            height=600
+        )
+        
         return fig
     
-    def region_chart_8_province_contribution_bar(self):
+    def province_contribution_to_regional_gdp(self):
         """
-        Region Chart 8: Bar chart of provinces within each region
-        Shows provincial GDP contributions within their respective regions
+        Chart 6: Province Contribution to Regional GDP - WITH REGION DROPDOWN
+        Bar chart showing provinces within each region
         """
         # Filter for province-level data
         province_data = self.df[self.df['Location_Type'].str.contains('Province|City', case=False, na=False)]
@@ -211,163 +178,245 @@ class GDPAnalysisDashboard:
         province_latest = province_data[province_data['Start_Year'] == latest_year]
         province_contribution = province_latest.groupby(['Region', 'Location_Name'])['Value'].sum().reset_index()
         
-        fig = px.bar(
-            province_contribution,
-            x='Location_Name',
-            y='Value',
-            color='Region',
-            title=f'Provincial GDP Contribution by Region ({latest_year})',
-            labels={'Value': 'GDP Value (Billions)', 'Location_Name': 'Province/City'},
-            facet_col='Region',
-            facet_col_wrap=2
-        )
+        # Get unique regions
+        regions = province_contribution['Region'].unique()
         
-        fig.update_xaxes(tickangle=-45)
-        fig.update_layout(height=1000)
-        return fig
-    
-    # ==================== BY INDUSTRY TAB - 7 CHARTS ====================
-    
-    def industry_chart_1_top_10_regions_by_industry(self):
-        """
-        Industry Chart 1: Top 10 Regions by GDP in different industries
-        Shows the leading regions for each major industry sector
-        """
-        latest_year = self.df['Start_Year'].max()
-        industry_data = self.df[self.df['Start_Year'] == latest_year]
+        # Create figure
+        fig = go.Figure()
         
-        # Get top 10 regions for each industry
-        top_regions = industry_data.groupby('Industry').apply(
-            lambda x: x.nlargest(10, 'Value')
-        ).reset_index(drop=True)
-        
-        fig = px.bar(
-            top_regions,
-            x='Value',
-            y='Region',
-            color='Industry',
-            title='Top 10 Regions by Industry GDP',
-            labels={'Value': 'GDP Value (Billions)', 'Region': 'Region'},
-            facet_col='Industry',
-            facet_col_wrap=2,
-            orientation='h'
-        )
-        
-        fig.update_layout(height=1200)
-        return fig
-    
-    def industry_chart_2_lowest_10_regions_by_industry(self):
-        """
-        Industry Chart 2: Lowest 10 Regions in different industries
-        Shows regions with the smallest GDP contribution in each industry
-        """
-        latest_year = self.df['Start_Year'].max()
-        industry_data = self.df[self.df['Start_Year'] == latest_year]
-        
-        # Get bottom 10 regions for each industry
-        bottom_regions = industry_data.groupby('Industry').apply(
-            lambda x: x.nsmallest(10, 'Value')
-        ).reset_index(drop=True)
-        
-        fig = px.bar(
-            bottom_regions,
-            x='Value',
-            y='Region',
-            color='Industry',
-            title='Lowest 10 Regions by Industry GDP',
-            labels={'Value': 'GDP Value (Billions)', 'Region': 'Region'},
-            facet_col='Industry',
-            facet_col_wrap=2,
-            orientation='h'
-        )
-        
-        fig.update_layout(height=1200)
-        return fig
-    
-    def industry_chart_3_national_gdp_composition(self):
-        """
-        Industry Chart 3: National GDP Composition by Industry
-        Shows the overall industry breakdown of national GDP
-        """
-        latest_year = self.df['Start_Year'].max()
-        industry_composition = self.df[self.df['Start_Year'] == latest_year].groupby('Industry')['Value'].sum().reset_index()
-        
-        fig = px.pie(
-            industry_composition,
-            values='Value',
-            names='Industry',
-            title=f'National GDP Composition by Industry ({latest_year})',
-            hole=0.4
-        )
-        
-        fig.update_traces(textposition='inside', textinfo='percent+label')
-        fig.update_layout(height=600)
-        return fig
-    
-    def industry_chart_4_industry_breakdown_stacked_bar(self):
-        """
-        Industry Chart 4: Stacked bar chart for industry breakdown 2018-2023
-        Shows how industry composition changed over time
-        """
-        yearly_industry_gdp = self.df.groupby(['Industry', 'Start_Year'])['Value'].sum().reset_index()
-        
-        fig = px.bar(
-            yearly_industry_gdp,
-            x='Start_Year',
-            y='Value',
-            color='Industry',
-            title='Industry GDP Breakdown Over Time (2018-2023)',
-            labels={'Value': 'GDP Value (Billions)', 'Start_Year': 'Year'},
-            barmode='stack'
-        )
-        
-        fig.update_layout(height=600)
-        return fig
-    
-    def industry_chart_5_industry_breakdown_donut(self):
-        """
-        Industry Chart 5: Donut chart for industry breakdown 2018-2023
-        Alternative visualization of industry composition over time
-        """
-        # Create subplots for each year
-        years = sorted(self.df['Start_Year'].unique())
-        
-        fig = make_subplots(
-            rows=2, cols=3,
-            specs=[[{'type': 'domain'}, {'type': 'domain'}, {'type': 'domain'}],
-                   [{'type': 'domain'}, {'type': 'domain'}, {'type': 'domain'}]],
-            subplot_titles=[f'Year {year}' for year in years]
-        )
-        
-        colors = px.colors.qualitative.Set3
-        
-        for i, year in enumerate(years):
-            row = i // 3 + 1
-            col = i % 3 + 1
-            
-            year_data = self.df[self.df['Start_Year'] == year].groupby('Industry')['Value'].sum()
-            
+        # Add traces for each region (initially show first region)
+        for i, region in enumerate(regions):
+            region_data = province_contribution[province_contribution['Region'] == region]
             fig.add_trace(
-                go.Pie(
-                    labels=year_data.index,
-                    values=year_data.values,
-                    hole=0.4,
-                    marker_colors=colors[:len(year_data)]
-                ),
-                row=row, col=col
+                go.Bar(
+                    x=region_data['Location_Name'],
+                    y=region_data['Value'],
+                    name=region,
+                    visible=True if i == 0 else False
+                )
+            )
+        
+        # Create dropdown buttons
+        buttons = []
+        for i, region in enumerate(regions):
+            visibility = [False] * len(regions)
+            visibility[i] = True
+            buttons.append(
+                dict(
+                    label=region,
+                    method="update",
+                    args=[{"visible": visibility},
+                          {"title": f"Province Contribution to {region} GDP ({latest_year})"}]
+                )
             )
         
         fig.update_layout(
-            title_text="Industry GDP Composition by Year (Donut Charts)",
-            height=800
+            title=f"Province Contribution to {regions[0]} GDP ({latest_year})",
+            xaxis_title="Province/City",
+            yaxis_title="GDP Value (Billions)",
+            updatemenus=[
+                dict(
+                    buttons=buttons,
+                    direction="down",
+                    showactive=True,
+                    x=0.1,
+                    xanchor="left",
+                    y=1.15,
+                    yanchor="top"
+                )
+            ],
+            height=600
         )
         
         return fig
     
-    def industry_chart_6_gdp_trend_by_industry_line(self):
+    # ==================== BY INDUSTRY TAB CHARTS ====================
+    
+    def top_regions_by_industry(self):
         """
-        Industry Chart 6: GDP Trend by Industry (Line Chart)
-        Shows how each industry's GDP evolved over the years
+        Chart 7: Top 10 Regions by GDP in different industries - WITH INDUSTRY DROPDOWN
+        Shows leading regions for each major industry
+        """
+        latest_year = self.df['Start_Year'].max()
+        industry_data = self.df[self.df['Start_Year'] == latest_year]
+        
+        # Get unique industries
+        industries = industry_data['Industry'].unique()
+        
+        # Create figure
+        fig = go.Figure()
+        
+        # Add traces for each industry
+        for i, industry in enumerate(industries):
+            industry_top = industry_data[industry_data['Industry'] == industry].nlargest(10, 'Value')
+            fig.add_trace(
+                go.Bar(
+                    x=industry_top['Value'],
+                    y=industry_top['Region'],
+                    orientation='h',
+                    name=industry,
+                    visible=True if i == 0 else False
+                )
+            )
+        
+        # Create dropdown buttons
+        buttons = []
+        for i, industry in enumerate(industries):
+            visibility = [False] * len(industries)
+            visibility[i] = True
+            buttons.append(
+                dict(
+                    label=industry,
+                    method="update",
+                    args=[{"visible": visibility},
+                          {"title": f"Top 10 Regions by {industry} GDP"}]
+                )
+            )
+        
+        fig.update_layout(
+            title=f"Top 10 Regions by {industries[0]} GDP",
+            xaxis_title="GDP Value (Billions)",
+            yaxis_title="Region",
+            updatemenus=[
+                dict(
+                    buttons=buttons,
+                    direction="down",
+                    showactive=True,
+                    x=0.1,
+                    xanchor="left",
+                    y=1.15,
+                    yanchor="top"
+                )
+            ],
+            height=600
+        )
+        
+        return fig
+    
+    def lowest_regions_by_industry(self):
+        """
+        Chart 8: Lowest 10 Regions in different industries - WITH INDUSTRY DROPDOWN
+        Shows regions with lowest GDP in each industry
+        """
+        latest_year = self.df['Start_Year'].max()
+        industry_data = self.df[self.df['Start_Year'] == latest_year]
+        
+        # Get unique industries
+        industries = industry_data['Industry'].unique()
+        
+        # Create figure
+        fig = go.Figure()
+        
+        # Add traces for each industry
+        for i, industry in enumerate(industries):
+            industry_bottom = industry_data[industry_data['Industry'] == industry].nsmallest(10, 'Value')
+            fig.add_trace(
+                go.Bar(
+                    x=industry_bottom['Value'],
+                    y=industry_bottom['Region'],
+                    orientation='h',
+                    name=industry,
+                    visible=True if i == 0 else False
+                )
+            )
+        
+        # Create dropdown buttons
+        buttons = []
+        for i, industry in enumerate(industries):
+            visibility = [False] * len(industries)
+            visibility[i] = True
+            buttons.append(
+                dict(
+                    label=industry,
+                    method="update",
+                    args=[{"visible": visibility},
+                          {"title": f"Lowest 10 Regions by {industry} GDP"}]
+                )
+            )
+        
+        fig.update_layout(
+            title=f"Lowest 10 Regions by {industries[0]} GDP",
+            xaxis_title="GDP Value (Billions)",
+            yaxis_title="Region",
+            updatemenus=[
+                dict(
+                    buttons=buttons,
+                    direction="down",
+                    showactive=True,
+                    x=0.1,
+                    xanchor="left",
+                    y=1.15,
+                    yanchor="top"
+                )
+            ],
+            height=600
+        )
+        
+        return fig
+    
+    def national_gdp_composition_by_industry(self):
+        """
+        Chart 9: National GDP Composition by Industry - WITH YEAR DROPDOWN
+        Stacked bar chart showing industry breakdown over time
+        """
+        yearly_industry_gdp = self.df.groupby(['Industry', 'Start_Year'])['Value'].sum().reset_index()
+        
+        # Get unique years
+        years = sorted(yearly_industry_gdp['Start_Year'].unique())
+        
+        # Create figure
+        fig = go.Figure()
+        
+        # Add traces for each year
+        for i, year in enumerate(years):
+            year_data = yearly_industry_gdp[yearly_industry_gdp['Start_Year'] == year]
+            fig.add_trace(
+                go.Bar(
+                    x=year_data['Industry'],
+                    y=year_data['Value'],
+                    name=str(year),
+                    visible=True if i == 0 else False
+                )
+            )
+        
+        # Create dropdown buttons
+        buttons = []
+        for i, year in enumerate(years):
+            visibility = [False] * len(years)
+            visibility[i] = True
+            buttons.append(
+                dict(
+                    label=str(year),
+                    method="update",
+                    args=[{"visible": visibility},
+                          {"title": f"National GDP Composition by Industry ({year})"}]
+                )
+            )
+        
+        fig.update_layout(
+            title=f"National GDP Composition by Industry ({years[0]})",
+            xaxis_title="Industry",
+            yaxis_title="GDP Value (Billions)",
+            updatemenus=[
+                dict(
+                    buttons=buttons,
+                    direction="down",
+                    showactive=True,
+                    x=0.1,
+                    xanchor="left",
+                    y=1.15,
+                    yanchor="top"
+                )
+            ],
+            height=600
+        )
+        
+        return fig
+    
+    def gdp_trend_by_industry(self):
+        """
+        Chart 10: GDP Trend by Industry (Line Chart)
+        Shows how each industry's GDP evolved over time
         """
         yearly_industry_gdp = self.df.groupby(['Industry', 'Start_Year'])['Value'].sum().reset_index()
         
@@ -382,12 +431,13 @@ class GDPAnalysisDashboard:
         )
         
         fig.update_layout(height=600)
+        
         return fig
     
-    def industry_chart_7_regions_vs_industries_heatmap(self):
+    def gdp_heatmap_regions_vs_industries(self):
         """
-        Industry Chart 7: Regions vs Industries Heatmap
-        Shows GDP values across regions and industries with heatmap intensity
+        Chart 11: Regions vs Industries GDP Heatmap
+        Heatmap showing GDP values across regions and industries
         """
         latest_year = self.df['Start_Year'].max()
         heatmap_data = self.df[self.df['Start_Year'] == latest_year].pivot_table(
@@ -400,56 +450,55 @@ class GDPAnalysisDashboard:
         fig = px.imshow(
             heatmap_data,
             title=f'GDP Heatmap: Regions vs Industries ({latest_year})',
-            labels=dict(x="Industry", y="Region", color="GDP Value (Billions)"),
+            labels=dict(x="Industry", y="Region", color="GDP Value"),
             aspect="auto",
             color_continuous_scale='Viridis'
         )
         
         fig.update_layout(height=800)
+        
         return fig
     
-    # ==================== GROWTH TAB - 5 CHARTS ====================
+    # ==================== GROWTH TAB CHARTS ====================
     
-    def growth_chart_1_two_year_growth_comparison_table(self):
+    def two_year_growth_comparison(self):
         """
-        Growth Chart 1: 2 Year Growth Comparison Table (2018-2019, 2019-2020, etc.)
-        Shows year-over-year growth rates in a table format
+        Chart 12: 2-Year Growth Comparison Table
+        Shows growth rates for consecutive years
         """
         # Calculate year-over-year growth rates
         yearly_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
         yearly_gdp = yearly_gdp.sort_values(['Region', 'Start_Year'])
+        
+        # Calculate growth rates
         yearly_gdp['Growth_Rate'] = yearly_gdp.groupby('Region')['Value'].pct_change() * 100
         
-        # Create year pairs for comparison
-        yearly_gdp['Year_Pair'] = yearly_gdp['Start_Year'].astype(str) + '-' + (yearly_gdp['Start_Year'] + 1).astype(str)
-        
-        # Remove first year (no growth rate available)
-        growth_data = yearly_gdp.dropna()
-        
-        # Create pivot table for heatmap
-        growth_pivot = growth_data.pivot(index='Region', columns='Year_Pair', values='Growth_Rate')
+        # Create pivot table for better visualization
+        growth_pivot = yearly_gdp.pivot(index='Region', columns='Start_Year', values='Growth_Rate')
         
         fig = px.imshow(
             growth_pivot,
             title='Year-over-Year Growth Rates by Region (%)',
-            labels=dict(x="Year Comparison", y="Region", color="Growth Rate (%)"),
+            labels=dict(x="Year", y="Region", color="Growth Rate (%)"),
             aspect="auto",
             color_continuous_scale='RdYlGn',
             color_continuous_midpoint=0
         )
         
         fig.update_layout(height=600)
+        
         return fig
     
-    def growth_chart_2_growth_rate_over_time_line(self):
+    def growth_rate_over_time_by_region(self):
         """
-        Growth Chart 2: Growth Rate Over Time by Region (Line Chart with % values)
-        Shows growth rate trends for each region over time
+        Chart 13: Growth Rate Over Time by Region (Line Chart)
+        Shows growth rate trends for each region
         """
         yearly_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
         yearly_gdp = yearly_gdp.sort_values(['Region', 'Start_Year'])
         yearly_gdp['Growth_Rate'] = yearly_gdp.groupby('Region')['Value'].pct_change() * 100
         
+        # Remove first year (no growth rate available)
         growth_data = yearly_gdp.dropna()
         
         fig = px.line(
@@ -457,19 +506,20 @@ class GDPAnalysisDashboard:
             x='Start_Year',
             y='Growth_Rate',
             color='Region',
-            title='Growth Rate Trends by Region (%)',
+            title='Growth Rate Trends by Region',
             labels={'Growth_Rate': 'Growth Rate (%)', 'Start_Year': 'Year'},
             markers=True
         )
         
         fig.add_hline(y=0, line_dash="dash", line_color="red", annotation_text="Zero Growth")
         fig.update_layout(height=600)
+        
         return fig
     
-    def growth_chart_3_fastest_growing_vs_shrinking_regions(self):
+    def fastest_growing_vs_shrinking_regions(self):
         """
-        Growth Chart 3: Fastest-Growing vs Shrinking Regions (Bar Chart Comparison)
-        Compares average growth rates across regions
+        Chart 14: Fastest-Growing vs Shrinking Regions
+        Bar chart comparison of regional performance
         """
         # Calculate average growth rate for each region
         yearly_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
@@ -487,26 +537,25 @@ class GDPAnalysisDashboard:
                 x=avg_growth['Growth_Rate'],
                 y=avg_growth['Region'],
                 orientation='h',
-                marker_color=colors,
-                text=[f"{x:.1f}%" for x in avg_growth['Growth_Rate']],
-                textposition='outside'
+                marker_color=colors
             )
         ])
         
         fig.update_layout(
-            title='Average Growth Rate by Region: Fastest Growing vs Shrinking',
+            title='Average Growth Rate by Region (Fastest Growing vs Shrinking)',
             xaxis_title='Average Growth Rate (%)',
             yaxis_title='Region',
             height=600
         )
         
         fig.add_vline(x=0, line_dash="dash", line_color="black")
+        
         return fig
     
-    def growth_chart_4_industry_growth_leaders(self):
+    def industry_growth_leaders(self):
         """
-        Growth Chart 4: Industry Growth Leaders - Which industries grew fastest per region
-        Shows the fastest-growing industry in each region
+        Chart 15: Industry Growth Leaders
+        Shows which industries grew fastest in each region
         """
         # Calculate growth rates by industry and region
         industry_yearly = self.df.groupby(['Region', 'Industry', 'Start_Year'])['Value'].sum().reset_index()
@@ -525,52 +574,21 @@ class GDPAnalysisDashboard:
             y='Growth_Rate',
             color='Industry',
             title='Fastest Growing Industry by Region',
-            labels={'Growth_Rate': 'Average Growth Rate (%)', 'Region': 'Region'},
-            text='Growth_Rate'
+            labels={'Growth_Rate': 'Average Growth Rate (%)', 'Region': 'Region'}
         )
         
-        fig.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
-        fig.update_layout(xaxis_tickangle=-45, height=600)
-        return fig
-    
-    def growth_chart_5_growth_volatility_analysis(self):
-        """
-        Growth Chart 5: Growth Volatility Analysis
-        Shows the consistency/volatility of growth rates across regions
-        """
-        # Calculate growth rate standard deviation for each region
-        yearly_gdp = self.df.groupby(['Region', 'Start_Year'])['Value'].sum().reset_index()
-        yearly_gdp = yearly_gdp.sort_values(['Region', 'Start_Year'])
-        yearly_gdp['Growth_Rate'] = yearly_gdp.groupby('Region')['Value'].pct_change() * 100
-        
-        growth_stats = yearly_gdp.groupby('Region')['Growth_Rate'].agg(['mean', 'std']).reset_index()
-        growth_stats.columns = ['Region', 'Avg_Growth', 'Growth_Volatility']
-        growth_stats = growth_stats.dropna()
-        
-        fig = px.scatter(
-            growth_stats,
-            x='Avg_Growth',
-            y='Growth_Volatility',
-            size='Growth_Volatility',
-            color='Avg_Growth',
-            hover_name='Region',
-            title='Growth Rate vs Volatility by Region',
-            labels={
-                'Avg_Growth': 'Average Growth Rate (%)',
-                'Growth_Volatility': 'Growth Volatility (Standard Deviation)',
-                'Region': 'Region'
-            },
-            color_continuous_scale='RdYlGn'
+        fig.update_layout(
+            xaxis_tickangle=-45,
+            height=600
         )
         
-        fig.update_layout(height=600)
         return fig
     
-    # ==================== PERCENT SHARE TAB - 3 CHARTS ====================
+    # ==================== PERCENT SHARE TAB CHARTS ====================
     
-    def share_chart_1_province_gdp_share_within_region(self):
+    def province_gdp_share_within_region(self):
         """
-        Share Chart 1: Province GDP Share Within Region (2018-2023)
+        Chart 16: Province GDP Share Within Region - WITH REGION DROPDOWN
         Shows how provinces contribute to their regional GDP over time
         """
         # Filter for province-level data
@@ -584,25 +602,75 @@ class GDPAnalysisDashboard:
         province_share = province_data.merge(regional_totals, on=['Region', 'Start_Year'])
         province_share['Share_Percent'] = (province_share['Value'] / province_share['Regional_Total']) * 100
         
-        fig = px.bar(
-            province_share,
-            x='Start_Year',
-            y='Share_Percent',
-            color='Location_Name',
-            facet_col='Region',
-            facet_col_wrap=2,
-            title='Province GDP Share Within Region (2018-2023)',
-            labels={'Share_Percent': 'Share (%)', 'Start_Year': 'Year'},
-            barmode='stack'
+        # Get unique regions
+        regions = province_share['Region'].unique()
+        
+        # Create figure
+        fig = go.Figure()
+        
+        # Add traces for each region
+        for i, region in enumerate(regions):
+            region_data = province_share[province_share['Region'] == region]
+            provinces = region_data['Location_Name'].unique()
+            
+            for j, province in enumerate(provinces):
+                province_data_filtered = region_data[region_data['Location_Name'] == province]
+                fig.add_trace(
+                    go.Bar(
+                        x=province_data_filtered['Start_Year'],
+                        y=province_data_filtered['Share_Percent'],
+                        name=province,
+                        visible=True if i == 0 else False
+                    )
+                )
+        
+        # Create dropdown buttons
+        buttons = []
+        trace_count = 0
+        for i, region in enumerate(regions):
+            region_data = province_share[province_share['Region'] == region]
+            provinces_in_region = len(region_data['Location_Name'].unique())
+            
+            visibility = [False] * len(fig.data)
+            for j in range(trace_count, trace_count + provinces_in_region):
+                visibility[j] = True
+            
+            buttons.append(
+                dict(
+                    label=region,
+                    method="update",
+                    args=[{"visible": visibility},
+                          {"title": f"Province GDP Share Within {region} (2018-2023)"}]
+                )
+            )
+            
+            trace_count += provinces_in_region
+        
+        fig.update_layout(
+            title=f"Province GDP Share Within {regions[0]} (2018-2023)",
+            xaxis_title="Year",
+            yaxis_title="Share (%)",
+            barmode='stack',
+            updatemenus=[
+                dict(
+                    buttons=buttons,
+                    direction="down",
+                    showactive=True,
+                    x=0.1,
+                    xanchor="left",
+                    y=1.15,
+                    yanchor="top"
+                )
+            ],
+            height=600
         )
         
-        fig.update_layout(height=800)
         return fig
     
-    def share_chart_2_change_in_percent_share_over_time(self):
+    def change_in_percent_share_over_time(self):
         """
-        Share Chart 2: Change in Percent Share Over Time
-        Shows how provincial shares evolved within their regions
+        Chart 17: Change in Percent Share Over Time - WITH REGION DROPDOWN
+        Shows how provincial shares changed over the years
         """
         # Calculate shares as in previous function
         province_data = self.df[self.df['Location_Type'].str.contains('Province|City', case=False, na=False)]
@@ -612,24 +680,75 @@ class GDPAnalysisDashboard:
         province_share = province_data.merge(regional_totals, on=['Region', 'Start_Year'])
         province_share['Share_Percent'] = (province_share['Value'] / province_share['Regional_Total']) * 100
         
-        fig = px.line(
-            province_share,
-            x='Start_Year',
-            y='Share_Percent',
-            color='Location_Name',
-            facet_col='Region',
-            facet_col_wrap=2,
-            title='Change in Province Share Over Time',
-            labels={'Share_Percent': 'Share (%)', 'Start_Year': 'Year'},
-            markers=True
+        # Get unique regions
+        regions = province_share['Region'].unique()
+        
+        # Create figure
+        fig = go.Figure()
+        
+        # Add traces for each region
+        trace_count = 0
+        for i, region in enumerate(regions):
+            region_data = province_share[province_share['Region'] == region]
+            provinces = region_data['Location_Name'].unique()
+            
+            for j, province in enumerate(provinces):
+                province_data_filtered = region_data[region_data['Location_Name'] == province]
+                fig.add_trace(
+                    go.Scatter(
+                        x=province_data_filtered['Start_Year'],
+                        y=province_data_filtered['Share_Percent'],
+                        mode='lines+markers',
+                        name=province,
+                        visible=True if i == 0 else False
+                    )
+                )
+        
+        # Create dropdown buttons
+        buttons = []
+        trace_count = 0
+        for i, region in enumerate(regions):
+            region_data = province_share[province_share['Region'] == region]
+            provinces_in_region = len(region_data['Location_Name'].unique())
+            
+            visibility = [False] * len(fig.data)
+            for j in range(trace_count, trace_count + provinces_in_region):
+                visibility[j] = True
+            
+            buttons.append(
+                dict(
+                    label=region,
+                    method="update",
+                    args=[{"visible": visibility},
+                          {"title": f"Change in Province Share Over Time - {region}"}]
+                )
+            )
+            
+            trace_count += provinces_in_region
+        
+        fig.update_layout(
+            title=f"Change in Province Share Over Time - {regions[0]}",
+            xaxis_title="Year",
+            yaxis_title="Share (%)",
+            updatemenus=[
+                dict(
+                    buttons=buttons,
+                    direction="down",
+                    showactive=True,
+                    x=0.1,
+                    xanchor="left",
+                    y=1.15,
+                    yanchor="top"
+                )
+            ],
+            height=600
         )
         
-        fig.update_layout(height=800)
         return fig
     
-    def share_chart_3_province_vs_regional_growth_gap(self):
+    def province_vs_regional_growth_gap(self):
         """
-        Share Chart 3: Province vs Regional Growth Gap
+        Chart 18: Province vs Regional Growth Gap
         Compares provincial growth rates with their regional averages
         """
         # Calculate provincial growth rates
@@ -657,13 +776,10 @@ class GDPAnalysisDashboard:
             x='Regional_Growth',
             y='Province_Growth',
             color='Region',
-            size=abs(growth_comparison['Growth_Gap']),
-            hover_data=['Location_Name', 'Start_Year', 'Growth_Gap'],
+            size='Growth_Gap',
+            hover_data=['Location_Name', 'Start_Year'],
             title='Province vs Regional Growth Comparison',
-            labels={
-                'Regional_Growth': 'Regional Growth Rate (%)', 
-                'Province_Growth': 'Provincial Growth Rate (%)'
-            }
+            labels={'Regional_Growth': 'Regional Growth Rate (%)', 'Province_Growth': 'Provincial Growth Rate (%)'}
         )
         
         # Add diagonal line for equal growth
@@ -674,6 +790,7 @@ class GDPAnalysisDashboard:
         )
         
         fig.update_layout(height=600)
+        
         return fig
     
     # ==================== MAIN EXECUTION FUNCTION ====================
@@ -684,36 +801,31 @@ class GDPAnalysisDashboard:
         Creates a comprehensive dashboard with all visualizations
         """
         charts = {
-            # By Region Tab - 8 Charts
-            'region_1_top_thriving_industries': self.region_chart_1_top_thriving_industries(),
-            'region_2_gdp_contribution_pie': self.region_chart_2_gdp_contribution_pie(),
-            'region_3_gdp_contribution_stacked': self.region_chart_3_gdp_contribution_stacked_bar(),
-            'region_4_total_gdp_by_year': self.region_chart_4_total_gdp_by_year(),
-            'region_5_gdp_trends_line': self.region_chart_5_gdp_trends_line(),
-            'region_6_gdp_growth_over_time': self.region_chart_6_regional_gdp_growth_over_time(),
-            'region_7_growth_rate_choropleth': self.region_chart_7_growth_rate_choropleth_map(),
-            'region_8_province_contribution_bar': self.region_chart_8_province_contribution_bar(),
+            # By Region Tab
+            'region_top_industries': self.top_thriving_industries_by_region(),
+            'region_gdp_contribution': self.gdp_contribution_per_region(),
+            'region_yearly_gdp': self.total_gdp_by_region_yearly(),
+            'region_gdp_trends': self.regional_gdp_trends(),
+            'region_growth_rate': self.growth_rate_calculation(),
+            'province_contribution': self.province_contribution_to_regional_gdp(),
             
-            # By Industry Tab - 7 Charts
-            'industry_1_top_10_regions': self.industry_chart_1_top_10_regions_by_industry(),
-            'industry_2_lowest_10_regions': self.industry_chart_2_lowest_10_regions_by_industry(),
-            'industry_3_national_composition': self.industry_chart_3_national_gdp_composition(),
-            'industry_4_breakdown_stacked_bar': self.industry_chart_4_industry_breakdown_stacked_bar(),
-            'industry_5_breakdown_donut': self.industry_chart_5_industry_breakdown_donut(),
-            'industry_6_trend_line': self.industry_chart_6_gdp_trend_by_industry_line(),
-            'industry_7_regions_vs_industries_heatmap': self.industry_chart_7_regions_vs_industries_heatmap(),
+            # By Industry Tab
+            'industry_top_regions': self.top_regions_by_industry(),
+            'industry_lowest_regions': self.lowest_regions_by_industry(),
+            'national_industry_composition': self.national_gdp_composition_by_industry(),
+            'industry_trends': self.gdp_trend_by_industry(),
+            'regions_industries_heatmap': self.gdp_heatmap_regions_vs_industries(),
             
-            # Growth Tab - 5 Charts
-            'growth_1_two_year_comparison': self.growth_chart_1_two_year_growth_comparison_table(),
-            'growth_2_growth_rate_over_time': self.growth_chart_2_growth_rate_over_time_line(),
-            'growth_3_fastest_vs_shrinking': self.growth_chart_3_fastest_growing_vs_shrinking_regions(),
-            'growth_4_industry_growth_leaders': self.growth_chart_4_industry_growth_leaders(),
-            'growth_5_growth_volatility': self.growth_chart_5_growth_volatility_analysis(),
+            # Growth Tab
+            'two_year_growth': self.two_year_growth_comparison(),
+            'growth_trends': self.growth_rate_over_time_by_region(),
+            'fastest_growing_regions': self.fastest_growing_vs_shrinking_regions(),
+            'industry_growth_leaders': self.industry_growth_leaders(),
             
-            # Percent Share Tab - 3 Charts
-            'share_1_province_share_timeline': self.share_chart_1_province_gdp_share_within_region(),
-            'share_2_share_change_over_time': self.share_chart_2_change_in_percent_share_over_time(),
-            'share_3_growth_gap_analysis': self.share_chart_3_province_vs_regional_growth_gap()
+            # Percent Share Tab
+            'province_share_timeline': self.province_gdp_share_within_region(),
+            'share_change_over_time': self.change_in_percent_share_over_time(),
+            'growth_gap_analysis': self.province_vs_regional_growth_gap()
         }
         
         # Save each chart as HTML
@@ -744,67 +856,34 @@ class GDPAnalysisDashboard:
                 .tab button.active { background-color: #ccc; }
                 .tabcontent { display: none; padding: 12px; border: 1px solid #ccc; border-top: none; }
                 .chart-container { margin: 20px 0; }
-                .tab-summary { background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
             </style>
         </head>
         <body>
-            <h1>GDP Analysis Dashboard</h1>
+            <h1>GDP Analysis Dashboard - Enhanced with Interactive Dropdowns</h1>
             
             <div class="tab">
-                <button class="tablinks active" onclick="openTab(event, 'RegionTab')">By Region (8 Charts)</button>
-                <button class="tablinks" onclick="openTab(event, 'IndustryTab')">By Industry (7 Charts)</button>
-                <button class="tablinks" onclick="openTab(event, 'GrowthTab')">Growth Analysis (5 Charts)</button>
-                <button class="tablinks" onclick="openTab(event, 'ShareTab')">Percent Share (3 Charts)</button>
+                <button class="tablinks active" onclick="openTab(event, 'RegionTab')">By Region</button>
+                <button class="tablinks" onclick="openTab(event, 'IndustryTab')">By Industry</button>
+                <button class="tablinks" onclick="openTab(event, 'GrowthTab')">Growth Analysis</button>
+                <button class="tablinks" onclick="openTab(event, 'ShareTab')">Percent Share</button>
             </div>
         """
         
         # Add tab contents with chart placeholders
         tab_contents = {
-            'RegionTab': {
-                'charts': [
-                    'region_1_top_thriving_industries', 'region_2_gdp_contribution_pie', 
-                    'region_3_gdp_contribution_stacked', 'region_4_total_gdp_by_year',
-                    'region_5_gdp_trends_line', 'region_6_gdp_growth_over_time',
-                    'region_7_growth_rate_choropleth', 'region_8_province_contribution_bar'
-                ],
-                'description': 'Regional analysis showing GDP distribution, trends, and provincial contributions across different regions.'
-            },
-            'IndustryTab': {
-                'charts': [
-                    'industry_1_top_10_regions', 'industry_2_lowest_10_regions',
-                    'industry_3_national_composition', 'industry_4_breakdown_stacked_bar',
-                    'industry_5_breakdown_donut', 'industry_6_trend_line',
-                    'industry_7_regions_vs_industries_heatmap'
-                ],
-                'description': 'Industry-focused analysis showing sectoral performance, regional leaders, and composition changes over time.'
-            },
-            'GrowthTab': {
-                'charts': [
-                    'growth_1_two_year_comparison', 'growth_2_growth_rate_over_time',
-                    'growth_3_fastest_vs_shrinking', 'growth_4_industry_growth_leaders',
-                    'growth_5_growth_volatility'
-                ],
-                'description': 'Growth rate analysis focusing on year-over-year changes, regional performance, and industry leaders.'
-            },
-            'ShareTab': {
-                'charts': [
-                    'share_1_province_share_timeline', 'share_2_share_change_over_time',
-                    'share_3_growth_gap_analysis'
-                ],
-                'description': 'Provincial share analysis showing how provinces contribute to regional GDP and growth patterns.'
-            }
+            'RegionTab': ['region_top_industries', 'region_gdp_contribution', 'region_yearly_gdp', 'region_gdp_trends', 'region_growth_rate', 'province_contribution'],
+            'IndustryTab': ['industry_top_regions', 'industry_lowest_regions', 'national_industry_composition', 'industry_trends', 'regions_industries_heatmap'],
+            'GrowthTab': ['two_year_growth', 'growth_trends', 'fastest_growing_regions', 'industry_growth_leaders'],
+            'ShareTab': ['province_share_timeline', 'share_change_over_time', 'growth_gap_analysis']
         }
         
-        for tab_id, tab_info in tab_contents.items():
+        for tab_id, chart_list in tab_contents.items():
             html_content += f'<div id="{tab_id}" class="tabcontent"'
             if tab_id == 'RegionTab':
                 html_content += ' style="display:block"'
             html_content += '>\n'
             
-            # Add tab description
-            html_content += f'<div class="tab-summary"><p>{tab_info["description"]}</p></div>\n'
-            
-            for chart_name in tab_info['charts']:
+            for chart_name in chart_list:
                 if chart_name in charts:
                     chart_html = charts[chart_name].to_html(include_plotlyjs=False, div_id=f"div_{chart_name}")
                     html_content += f'<div class="chart-container">{chart_html}</div>\n'
@@ -833,25 +912,30 @@ class GDPAnalysisDashboard:
         </html>
         """
         
-        with open('gdp_dashboard.html', 'w') as f:
+        with open('gdp_dashboard_enhanced.html', 'w') as f:
             f.write(html_content)
         
-        print("Combined dashboard saved as: gdp_dashboard.html")
-
-# ==================== EXECUTION ====================
+        print("Enhanced dashboard with dropdowns saved as: gdp_dashboard_enhanced.html")
 
 if __name__ == "__main__":
     # Initialize the dashboard
     dashboard = GDPAnalysisDashboard('cleaned_data.xlsx')
     
     # Generate all charts
-    print("Generating GDP Analysis Dashboard...")
+    print("Generating Enhanced GDP Analysis Dashboard with Interactive Dropdowns...")
     charts = dashboard.generate_all_charts()
     
     print(f"\nDashboard generation complete!")
-    print(f"Generated {len(charts)} charts:")
-    print("- By Region Tab: 8 charts")
-    print("- By Industry Tab: 7 charts") 
-    print("- Growth Analysis Tab: 5 charts")
-    print("- Percent Share Tab: 3 charts")
+    print(f"Generated {len(charts)} charts across 4 main categories:")
+    print("- By Region: 6 charts")
+    print("- By Industry: 5 charts") 
+    print("- Growth Analysis: 4 charts")
+    print("- Percent Share: 3 charts")
+    print("\nEnhanced Features Added:")
+    print("✓ Top 10 highest regions by industry GDP - Industry dropdown")
+    print("✓ Top 10 lowest regions by industry GDP - Industry dropdown") 
+    print("✓ National GDP composition - Year dropdown")
+    print("✓ Provincial GDP contribution - Region dropdown")
+    print("✓ Province GDP share - Region dropdown")
+    print("✓ Share change over time - Region dropdown")
     print("\nAll charts are HTML-compatible and ready for web deployment.")
