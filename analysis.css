@@ -22,7 +22,6 @@ body {
   width: 100%;
 }
 
-/* Important for full height */
 
 body {
   margin: 0;
@@ -30,12 +29,6 @@ body {
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
-  /* background-image: url('assets/bg-blue.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed; */
-
 }
 
 
