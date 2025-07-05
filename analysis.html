@@ -19,6 +19,7 @@
     <nav>
         <ul>
             <li><a href="#overview" class="main-link active">Overview</a></li>
+            <li><a href="#dashboard" class="main-link">Dashboard</a></li>
             <li><a href="#descriptive" class="main-link">Descriptive Analysis</a></li>
             <li><a href="#predictive" class="main-link">Predictive Trends</a></li>
         </ul>
@@ -88,22 +89,22 @@
 
         <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
 
-       <nav class="data-source-box" aria-label="Data sources">
-            <h4 >📚 Data Sources</h4>
+        <nav class="data-source-box" aria-label="Data sources">
+            <h4>📚 Data Sources</h4>
             <p>
-                The data used in this dashboard is sourced from the Philippine Statistics Authority (PSA) and the OpenStat
+                The data used in this dashboard is sourced from the Philippine Statistics Authority (PSA) and the
+                OpenStat
                 portal, which provide comprehensive statistics on the country's economic performance.
             <ul>
                 <li style="margin-bottom: 0px;"><a href="https://psa.gov.ph/statistics/grdp" target="_blank">Philippine
                         Statistics Authority (PSA)</a></li>
                 <li><a href="https://openstat.psa.gov.ph/Database/Gross-Regional-Domestic-Product"
                         target="_blank">OpenStat Portal</a></li>
-                <li><a href="https://gdpmap.com/?countries=PH"
-                        target="_blank">GDP Global Map</a></li>
+                <li><a href="https://gdpmap.com/?countries=PH" target="_blank">GDP Global Map</a></li>
             </ul>
         </nav>
 
-                <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
+        <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
     </section>
 
 
@@ -138,12 +139,15 @@
                 <h4>Top Thriving Industries in Each Region</h4>
                 <iframe src="plots\Descriptive\region\region_top_industries.html"
                     style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
-            </div>
 
-            <div class="summary-box">
+                <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>"Wholesale and Retail Trade; Repair of Motor Vehicles and Motorcycles," "Manufacturing," and "Financial and Insurance Activities" seem to be significant contributors to GDP in many regions, especially the more urbanized ones. "Agriculture, Forestry, and Fishing" remains important in several regions.</p>
+                    <p>"Wholesale and Retail Trade; Repair of Motor Vehicles and Motorcycles," "Manufacturing," and
+                        "Financial and Insurance Activities" seem to be significant contributors to GDP in many regions,
+                        especially the more urbanized ones. "Agriculture, Forestry, and Fishing" remains important in
+                        several regions.</p>
                 </div>
+            </div>
 
             <div id="region-contribution" class="region-sub-content">
                 <h4>GDP Contribution per Region</h4>
@@ -341,7 +345,7 @@
                 <iframe src="plots\Descriptive\share\share_change_over_time.html"
                     style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
 
-        </div>
+            </div>
     </section>
 
 
@@ -428,8 +432,8 @@
             </div>
 
             <div id="industry-region-forecast" class="forecast-industry-sub-content active">
-                <h4>Industry GDP Forecast per Region</h4>
-                <iframe src="plots\Predictive\Industry_Projected_Growth_Rate_Ranking_2024_2025.html"
+                <h4>Industry Growth Forecast</h4>
+                <iframe src="plots\Predictive\Industry_Performance_Forecast_Bar_Chart_2024_2025.html"
                     style="height: 600px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
 
 
