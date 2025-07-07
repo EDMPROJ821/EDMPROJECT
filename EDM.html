@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDP Analysis Dashboard - Power BI Style</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #1B365D;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, #0078D4 0%, #003366 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 120, 212, 0.3);
+            text-align: center;
+        }
+        
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: rgba(64, 224, 208, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 30px;
+            gap: 8px;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: #0078D4;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .nav-tab:hover {
+            background: rgba(0, 120, 212, 0.1);
+        }
+        
+        .nav-tab.active {
+            background: #0078D4;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.3);
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #0078D4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.1) 0%, rgba(64, 224, 208, 0.1) 100%);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 120, 212, 0.2);
+        }
+        
+        .kpi-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0078D4;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .kpi-label {
+            font-size: 0.95rem;
+            color: #1B365D;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .kpi-change {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .positive {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .negative {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-3px);
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #003366;
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0078D4;
+        }
+        
+        .insights-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .insights-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0078D4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .insight-item {
+            background: linear-gradient(135deg, rgba(176, 224, 230, 0.2) 0%, rgba(135, 206, 235, 0.2) 100%);
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4A90E2;
+            transition: transform 0.2s ease;
+        }
+        
+        .insight-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .insight-text {
+            font-size: 1rem;
+            color: #1B365D;
+            line-height: 1.6;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #0078D4;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-title {
+                font-size: 2rem;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0078D4;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #003366;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">📊 GDP Analysis Dashboard</h1>
+            <p class="dashboard-subtitle">Philippine Economic Overview • Power BI Style • Data Year: 2023</p>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">📈 Overview</button>
+            <button class="nav-tab" onclick="showTab('regions')">🗺️ Regions</button>
+            <button class="nav-tab" onclick="showTab('industries')">🏭 Industries</button>
+            <button class="nav-tab" onclick="showTab('insights')">🔍 Insights</button>
+        </div>
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-icon">💰</span>
+                    <div class="kpi-value">₱18,580B</div>
+                    <div class="kpi-label">Total GDP</div>
+                    <div class="kpi-change positive">↗ 5.2% YoY</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <span class="kpi-icon">📍</span>
+                    <div class="kpi-value">17</div>
+                    <div class="kpi-label">Total Regions</div>
+                    <div class="kpi-change positive">Active Regions</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <span class="kpi-icon">🏭</span>
+                    <div class="kpi-value">16</div>
+                    <div class="kpi-label">Industries Tracked</div>
+                    <div class="kpi-change positive">Sectors</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <span class="kpi-icon">🏆</span>
+                    <div class="kpi-value">₱6,890B</div>
+                    <div class="kpi-label">Top Region GDP</div>
+                    <div class="kpi-change positive">NCR Leading</div>
+                </div>
+            </div>
+            
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">National GDP Trend</div>
+                    <div id="gdp-trend-chart"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Regional GDP Distribution</div>
+                    <div id="regional-distribution-chart"></div>
+                </div>
+                
+                <div class="chart-container full-width">
+                    <div class="chart-title">Industry Performance Overview</div>
+                    <div id="industry-performance-chart"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Regions Tab -->
+        <div id="regions" class="tab-content">
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Regional Growth Rates</div>
+                    <div id="regional-growth-chart"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Top vs Bottom Performers</div>
+                    <div id="performance-comparison-chart"></div>
+                </div>
+                
+                <div class="chart-container full-width">
+                    <div class="chart-title">Regional Performance Heatmap</div>
+                    <div id="growth-heatmap-chart"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Industries Tab -->
+        <div id="industries" class="tab-content">
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Industry GDP Trends</div>
+                    <div id="industry-trends-chart"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Industry Composition</div>
+                    <div id="industry-composition-chart"></div>
+                </div>
+                
+                <div class="chart-container full-width">
+                    <div class="chart-title">Industries vs Regions Heatmap</div>
+                    <div id="industry-region-heatmap"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Insights Tab -->
+        <div id="insights" class="tab-content">
+            <div class="insights-section">
+                <h2 class="insights-title">🔍 Key Economic Insights</h2>
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Strong Economic Growth:</strong> The Philippine economy demonstrates robust performance with a 5.2% year-over-year GDP growth, indicating healthy economic expansion across multiple sectors.
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Regional Concentration:</strong> The National Capital Region (NCR) continues to dominate the economic landscape, contributing ₱6,890 billion (37.1%) to the total national GDP, highlighting significant economic concentration.
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Economic Diversification:</strong> With 17 active regions and 16 major industry sectors, the Philippine economy shows good diversification, reducing dependency on single sectors or regions.
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Manufacturing Leadership:</strong> The Manufacturing sector leads GDP contribution with ₱3,250 billion, followed by Services (₱2,890 billion) and Agriculture (₱1,840 billion), showing industrial strength.
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Regional Development Opportunities:</strong> Significant GDP variations between regions indicate potential for targeted economic development programs in underperforming areas.
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Growth Sustainability:</strong> Consistent positive growth trends across multiple years suggest sustainable economic policies and strong fundamentals supporting long-term prosperity.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample GDP Data (Philippine Economic Data Structure)
+        const gdpData = {
+            nationalTrend: {
+                years: [2018, 2019, 2020, 2021, 2022, 2023],
+                values: [15420, 16180, 14950, 15680, 17650, 18580]
+            },
+            
+            regionalData: [
+                {name: 'National Capital Region (NCR)', value: 6890, growth: 5.8},
+                {name: 'Region IV-A (CALABARZON)', value: 2340, growth: 4.2},
+                {name: 'Region III (Central Luzon)', value: 1890, growth: 3.9},
+                {name: 'Region VII (Central Visayas)', value: 1450, growth: 4.8},
+                {name: 'Region VI (Western Visayas)', value: 1120, growth: 3.2},
+                {name: 'Region XI (Davao Region)', value: 980, growth: 5.1},
+                {name: 'Region X (Northern Mindanao)', value: 850, growth: 2.8},
+                {name: 'Region I (Ilocos Region)', value: 720, growth: 3.5}
+            ],
+            
+            industryData: [
+                {name: 'Manufacturing', value: 3250, growth: 4.8},
+                {name: 'Services', value: 2890, growth: 6.2},
+                {name: 'Agriculture, Forestry, and Fishing', value: 1840, growth: 2.1},
+                {name: 'Construction', value: 1650, growth: 7.3},
+                {name: 'Wholesale and Retail Trade', value: 1520, growth: 5.5},
+                {name: 'Financial and Insurance Activities', value: 1380, growth: 8.1},
+                {name: 'Transportation and Storage', value: 1120, growth: 4.2},
+                {name: 'Information and Communication', value: 980, growth: 9.8},
+                {name: 'Real Estate', value: 890, growth: 3.7},
+                {name: 'Education', value: 760, growth: 2.9}
+            ],
+            
+            growthMatrix: [
+                ['NCR', 2018, 5.2], ['NCR', 2019, 4.8], ['NCR', 2020, -2.1], ['NCR', 2021, 3.4], ['NCR', 2022, 6.1], ['NCR', 2023, 5.8],
+                ['CALABARZON', 2018, 4.1], ['CALABARZON', 2019, 3.9], ['CALABARZON', 2020, -1.8], ['CALABARZON', 2021, 2.8], ['CALABARZON', 2022, 4.5], ['CALABARZON', 2023, 4.2],
+                ['Central Luzon', 2018, 3.8], ['Central Luzon', 2019, 3.2], ['Central Luzon', 2020, -2.5], ['Central Luzon', 2021, 2.1], ['Central Luzon', 2022, 4.1], ['Central Luzon', 2023, 3.9],
+                ['Central Visayas', 2018, 4.5], ['Central Visayas', 2019, 4.1], ['Central Visayas', 2020, -1.2], ['Central Visayas', 2021, 3.8], ['Central Visayas', 2022, 5.2], ['Central Visayas', 2023, 4.8]
+            ]
+        };
+
+        // Color palette
+        const colors = {
+            primary: '#0078D4',
+            secondary: '#4A90E2',
+            accent: '#40E0D0',
+            dark: '#003366',
+            light: '#87CEEB',
+            gradient: ['#0078D4', '#4A90E2', '#40E0D0', '#87CEEB', '#4682B4', '#6495ED', '#B0E0E6', '#1B365D']
+        };
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+            
+            // Render charts for the active tab
+            renderChartsForTab(tabName);
+        }
+
+        // Chart rendering functions
+        function createGDPTrendChart() {
+            const trace = {
+                x: gdpData.nationalTrend.years,
+                y: gdpData.nationalTrend.values,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: {color: colors.primary, width: 4},
+                marker: {size: 8, color: colors.secondary},
+                fill: 'tonexty',
+                fillcolor: 'rgba(64, 224, 208, 0.1)'
+            };
+
+            const layout = {
+                xaxis: {title: 'Year', color: colors.dark},
+                yaxis: {title: 'GDP (Billions ₱)', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                margin: {t: 20, r: 20, b: 40, l: 60}
+            };
+
+            Plotly.newPlot('gdp-trend-chart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createRegionalDistributionChart() {
+            const trace = {
+                labels: gdpData.regionalData.map(d => d.name.split(' ')[0] + '...'),
+                values: gdpData.regionalData.map(d => d.value),
+                type: 'pie',
+                hole: 0.6,
+                marker: {colors: colors.gradient},
+                textinfo: 'label+percent',
+                textposition: 'outside'
+            };
+
+            const layout = {
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                showlegend: false,
+                margin: {t: 20, r: 20, b: 20, l: 20}
+            };
+
+            Plotly.newPlot('regional-distribution-chart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createIndustryPerformanceChart() {
+            const trace = {
+                x: gdpData.industryData.map(d => d.value),
+                y: gdpData.industryData.map(d => d.name.length > 25 ? d.name.substring(0, 25) + '...' : d.name),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: gdpData.industryData.map((d, i) => colors.gradient[i % colors.gradient.length]),
+                    line: {color: colors.primary, width: 1}
+                }
+            };
+
+            const layout = {
+                xaxis: {title: 'GDP (Billions ₱)', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                margin: {t: 20, r: 20, b: 40, l: 200}
+            };
+
+            Plotly.newPlot('industry-performance-chart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createRegionalGrowthChart() {
+            const trace = {
+                x: gdpData.regionalData.map(d => d.name.split(' ')[0]),
+                y: gdpData.regionalData.map(d => d.growth),
+                type: 'bar',
+                marker: {
+                    color: gdpData.regionalData.map(d => d.growth >= 4 ? colors.primary : colors.secondary),
+                    line: {color: colors.dark, width: 1}
+                }
+            };
+
+            const layout = {
+                xaxis: {title: 'Region', color: colors.dark},
+                yaxis: {title: 'Growth Rate (%)', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                margin: {t: 20, r: 20, b: 60, l: 60}
+            };
+
+            Plotly.newPlot('regional-growth-chart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createPerformanceComparisonChart() {
+            const sortedRegions = [...gdpData.regionalData].sort((a, b) => a.growth - b.growth);
+            const top5 = sortedRegions.slice(-5);
+            const bottom5 = sortedRegions.slice(0, 5);
+
+            const trace1 = {
+                x: top5.map(d => d.name.split(' ')[0]),
+                y: top5.map(d => d.growth),
+                type: 'bar',
+                name: 'Top Performers',
+                marker: {color: colors.primary}
+            };
+
+            const trace2 = {
+                x: bottom5.map(d => d.name.split(' ')[0]),
+                y: bottom5.map(d => d.growth),
+                type: 'bar',
+                name: 'Bottom Performers',
+                marker: {color: colors.secondary}
+            };
+
+            const layout = {
+                xaxis: {title: 'Region', color: colors.dark},
+                yaxis: {title: 'Growth Rate (%)', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                barmode: 'group',
+                margin: {t: 20, r: 20, b: 60, l: 60}
+            };
+
+            Plotly.newPlot('performance-comparison-chart', [trace1, trace2], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createGrowthHeatmap() {
+            // Create matrix data
+            const regions = ['NCR', 'CALABARZON', 'Central Luzon', 'Central Visayas'];
+            const years = [2018, 2019, 2020, 2021, 2022, 2023];
+            const zData = [
+                [5.2, 4.8, -2.1, 3.4, 6.1, 5.8],
+                [4.1, 3.9, -1.8, 2.8, 4.5, 4.2],
+                [3.8, 3.2, -2.5, 2.1, 4.1, 3.9],
+                [4.5, 4.1, -1.2, 3.8, 5.2, 4.8]
+            ];
+
+            const trace = {
+                z: zData,
+                x: years,
+                y: regions,
+                type: 'heatmap',
+                colorscale: [
+                    [0, colors.light],
+                    [0.5, colors.secondary],
+                    [1, colors.primary]
+                ],
+                showscale: true
+            };
+
+            const layout = {
+                xaxis: {title: 'Year', color: colors.dark},
+                yaxis: {title: 'Region', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                margin: {t: 20, r: 60, b: 40, l: 100}
+            };
+
+            Plotly.newPlot('growth-heatmap-chart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createIndustryTrendsChart() {
+            const years = [2021, 2022, 2023];
+            const traces = gdpData.industryData.slice(0, 5).map((industry, i) => ({
+                x: years,
+                y: years.map(year => industry.value * (0.85 + (year - 2021) * 0.075 + Math.random() * 0.1)),
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: industry.name.length > 20 ? industry.name.substring(0, 20) + '...' : industry.name,
+                line: {color: colors.gradient[i], width: 3},
+                marker: {size: 6}
+            }));
+
+            const layout = {
+                xaxis: {title: 'Year', color: colors.dark},
+                yaxis: {title: 'GDP (Billions ₱)', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                margin: {t: 20, r: 20, b: 40, l: 60}
+            };
+
+            Plotly.newPlot('industry-trends-chart', traces, layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createIndustryCompositionChart() {
+            const trace = {
+                labels: gdpData.industryData.slice(0, 8).map(d => d.name.split(',')[0]),
+                values: gdpData.industryData.slice(0, 8).map(d => d.value),
+                type: 'pie',
+                marker: {colors: colors.gradient},
+                textinfo: 'label+percent'
+            };
+
+            const layout = {
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                showlegend: true,
+                legend: {orientation: 'v', x: 1.05, y: 0.5},
+                margin: {t: 20, r: 150, b: 20, l: 20}
+            };
+
+            Plotly.newPlot('industry-composition-chart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        function createIndustryRegionHeatmap() {
+            const industries = ['Manufacturing', 'Services', 'Agriculture', 'Construction', 'Trade'];
+            const regions = ['NCR', 'CALABARZON', 'Central Luzon', 'Central Visayas'];
+            const zData = [
+                [100, 85, 70, 60],
+                [95, 80, 65, 55],
+                [30, 75, 90, 70],
+                [80, 70, 60, 45],
+                [90, 75, 65, 50]
+            ];
+
+            const trace = {
+                z: zData,
+                x: regions,
+                y: industries,
+                type: 'heatmap',
+                colorscale: [
+                    [0, colors.light],
+                    [0.5, colors.secondary],
+                    [1, colors.primary]
+                ],
+                showscale: true
+            };
+
+            const layout = {
+                xaxis: {title: 'Region', color: colors.dark},
+                yaxis: {title: 'Industry', color: colors.dark},
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {color: colors.dark, family: 'Segoe UI'},
+                margin: {t: 20, r: 60, b: 60, l: 120}
+            };
+
+            Plotly.newPlot('industry-region-heatmap', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        // Render charts based on active tab
+        function renderChartsForTab(tabName) {
+            setTimeout(() => {
+                switch(tabName) {
+                    case 'overview':
+                        createGDPTrendChart();
+                        createRegionalDistributionChart();
+                        createIndustryPerformanceChart();
+                        break;
+                    case 'regions':
+                        createRegionalGrowthChart();
+                        createPerformanceComparisonChart();
+                        createGrowthHeatmap();
+                        break;
+                    case 'industries':
+                        createIndustryTrendsChart();
+                        createIndustryCompositionChart();
+                        createIndustryRegionHeatmap();
+                        break;
+                }
+            }, 100);
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial chart rendering
+            renderChartsForTab('overview');
+            
+            // Add smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const activeTab = document.querySelector('.tab-content.active').id;
+            renderChartsForTab(activeTab);
+        });
+    </script>
+</body>
+</html>
