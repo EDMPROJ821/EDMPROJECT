@@ -1,16 +1,19 @@
 :root {
-  --main-blue: #0052a5;         /* Core navy blue */
-  --sky-blue: #4ba3c7;          /* Fresh contrast */
-  --accent-gold: #f5b041;       /* Professional warmth */
-  --sand-beige: #fdf6e3;        /* For background and cards */
-  --soft-gray: #f4f4f4;         /* Neutral areas */
-  --muted-teal: #008080;        /* For info blocks */
-  --danger-red: #d9534f;        /* Optional alert color */
+  --crimson: #A51C30;           /* Harvard Crimson */
+  --deep-navy: #001C3D;         /* Harvard navy tone */
+  --muted-gold: #C2A878;        /* Classic gold accent */
+  --ivory: #F9F6F0;             /* Light academic ivory background */
+  --stone-gray: #E3E3E3;        /* Neutral soft gray */
+  --muted-teal: #708C91;        /* Toned down teal for info blocks */
+  --danger-red: #B3001B;        /* Sharper warning */
 }
 
+footer, header {
+  color: #F9F6F0;
+}
 
 nav ul li a.active {
-  background: var(--accent-gold);
+  background: var(--muted-gold);
   color: #000;
 }
 
@@ -28,6 +31,7 @@ body {
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #FFFDF8 0%, #F5F3EE 100%);
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
@@ -39,14 +43,15 @@ h1, h2, h3 {
 }
 
 header {
-  background: linear-gradient(135deg, var(--main-blue), #003060);
+  background: linear-gradient(135deg, var(--deep-navy), #003060);
   color: white;
   padding: 1.5rem 2rem;
   text-align: center;
   position: relative;
   font-family: 'Merriweather', serif;
   letter-spacing: 0.5px;
-  border-bottom: 6px solid var(--accent-gold);
+border-bottom: 6px solid var(--crimson);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 header::after {
@@ -67,7 +72,7 @@ nav ul {
   padding: 0;
   margin: 0;
   background: white;
-  border-bottom: 2px solid var(--main-blue);
+  border-bottom: 2px solid var(--deep-navy);
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
   padding: 0.5rem 0;
 }
@@ -81,21 +86,21 @@ nav ul li a {
   padding: 1rem;
   display: inline-block;
   font-weight: bold;
-  color: var(--main-blue);
+  color: var(--deep-navy);
   transition: 0.3s ease;
   border-radius: 6px;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-background-color: var(--accent-gold);
+background-color: var(--muted-gold);
   color: #000;
 }
 
 section {
   display: none;
   padding: 2rem;
-  background: var(--sand-beige);
+  background: linear-gradient(135deg, #FFFDF8 0%, #F5F3EE 100%);
   margin: 20px auto;
   border-radius: 10px;
   box-shadow: 0 3px 12px rgba(0,0,0,0.05);
@@ -107,6 +112,33 @@ section.active {
   display: block;
   animation: fadeIn 0.5s ease-in-out;
 }
+
+
+#dashboard {
+  display: none;
+  background: white;
+  padding: 2rem;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+  width: 95%;
+  max-width: 1700px;
+  transition: all 0.3s ease-in-out;
+}
+
+#dashboard.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#dashboard iframe {
+  width: 100%;
+  height: 1000px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
 
 
 @keyframes fadeIn {
@@ -123,9 +155,9 @@ section.active {
 }
 
 .nested-tabs button {
-  background: white;
-  border: 2px solid #0052a5;
-  color: #0052a5;
+  background: var(--crimson);
+  color: white;
+  border-color: var(--crimson);
   padding: 10px 20px;
   border-radius: 6px;
   font-weight: bold;
@@ -133,13 +165,15 @@ section.active {
 }
 
 .nested-tabs button.active {
-  background: #0052a5;
+background: var(--crimson);
   color: white;
+  border-color: var(--crimson);
 }
 
 .nested-tabs button:hover {
-  background: #0052a5;
+background: var(--crimson);
   color: white;
+  border-color: var(--crimson);
 }
 
 button, .sub-tabs button, .nested-tabs button {
@@ -148,12 +182,12 @@ button, .sub-tabs button, .nested-tabs button {
   font-weight: 600;
   transition: 0.25s;
   background: white;
-  border: 2px solid var(--main-blue);
-  color: var(--main-blue);
+  border: 2px solid var(--deep-navy);
+  color: var(--deep-navy);
 }
 
 button:hover, button.active {
-  background: var(--main-blue);
+  background: var(--deep-navy);
   color: white;
 }
 
@@ -169,7 +203,7 @@ button:hover, button.active {
   margin: 0 auto;
   border: 0px solid #ccc;
   padding: 10px;
-  border-left: solid var(--main-blue);
+  border-left: solid var(--deep-navy);
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: all 0.3s ease-in-out;
 
@@ -258,8 +292,8 @@ button:hover, button.active {
 
 
 .summary-box {
-  background: #e8f9fd;
-  border-left: 5px solid var(--muted-teal);
+  background: var(--stone-gray);
+  border-left: 5px solid var(--crimson);
   padding: 1.5rem;
   margin-top: 40px;
   border-radius: 8px;
@@ -271,7 +305,7 @@ button:hover, button.active {
 .data-source-box {
   background: #ffffff;
   padding: 1.5rem 2rem;
-  border-left: 6px solid var(--main-blue);
+  border-left: 6px solid var(--deep-navy);
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
   margin: 40px auto;
@@ -281,18 +315,18 @@ button:hover, button.active {
 
 .data-source-box h3 {
   font-family: 'Merriweather', serif;
-  color: var(--main-blue);
+  color: var(--deep-navy);
 }
 
 .data-source-box a {
-  color: var(--main-blue);
+  color: var(--deep-navy);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .data-source-box a:hover {
-  color: var(--accent-gold);
+  color: var(--muted-gold);
 }
 
 
@@ -303,7 +337,7 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem 0;
-  border-top: 4px solid var(--accent-gold);
+  border-top: 4px solid var(--muted-gold);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
 }
