@@ -67,10 +67,12 @@
             padding: 8px;
             margin-bottom: 30px;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .nav-tab {
             flex: 1;
+            min-width: 140px;
             padding: 12px 20px;
             background: transparent;
             color: var(--primary-navy);
@@ -79,18 +81,36 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
+            border: none;
+            text-align: center;
         }
-
 
         .nav-tab:hover {
             background: rgba(165, 28, 48, 0.1);
-            /* crimson hover */
         }
 
         .nav-tab.active {
             background: var(--harvard-crimson);
             color: white;
             box-shadow: 0 4px 12px rgba(165, 28, 48, 0.3);
+        }
+
+        .flag-button {
+            background: linear-gradient(135deg, #0038A8, #CE1126, #FCD116);
+            border: 2px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flag-button::before {
+            content: '🇵🇭';
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        .flag-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(206, 17, 38, 0.4);
         }
 
         .kpi-grid {
@@ -255,6 +275,62 @@
             font-size: 1.1rem;
         }
 
+        .forecast-controls {
+            background: rgba(0, 28, 61, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .forecast-controls h3 {
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            min-width: 120px;
+        }
+
+        .control-group select, .control-group input {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .forecast-button {
+            background: var(--harvard-crimson);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .forecast-button:hover {
+            background: #8B1538;
+            transform: translateY(-2px);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 768px) {
             .charts-grid {
                 grid-template-columns: 1fr;
@@ -271,9 +347,12 @@
             .nav-tabs {
                 flex-direction: column;
             }
+
+            .nav-tab {
+                min-width: auto;
+            }
         }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -306,7 +385,9 @@
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('overview')">📈 Overview</button>
             <button class="nav-tab" onclick="showTab('regions')">🗺️ Regions</button>
+            <button class="nav-tab" onclick="showTab('predictive')">🔮 Predictive Model</button>
             <button class="nav-tab" onclick="showTab('industries')">🏭 Industries</button>
+            <button class="nav-tab flag-button" onclick="showTab('philippines-map')">PH Map</button>
             <button class="nav-tab" onclick="showTab('insights')">🔍 Insights</button>
         </div>
 
@@ -382,6 +463,52 @@
             </div>
         </div>
 
+        <!-- Predictive Model Tab -->
+        <div id="predictive" class="tab-content">
+            <div class="forecast-controls">
+                <h3>🔮 GDP Forecasting Controls</h3>
+                <div class="control-group">
+                    <label>Forecast Type:</label>
+                    <select id="forecast-type">
+                        <option value="regional">Regional GDP</option>
+                        <option value="national">National GDP</option>
+                        <option value="industry">Industry Growth Rate</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Forecast Years:</label>
+                    <input type="number" id="forecast-years" value="5" min="1" max="10">
+                </div>
+                <div class="control-group">
+                    <label>Region/Industry:</label>
+                    <select id="forecast-target">
+                        <option value="all">All Regions</option>
+                        <option value="ncr">National Capital Region (NCR)</option>
+                        <option value="calabarzon">Region IV-A (CALABARZON)</option>
+                        <option value="central-luzon">Region III (Central Luzon)</option>
+                    </select>
+                </div>
+                <button class="forecast-button" onclick="generateForecast()">Generate Forecast</button>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container full-width">
+                    <div class="chart-title">GDP Forecast with Confidence Intervals</div>
+                    <div id="forecast-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Growth Rate Projections</div>
+                    <div id="growth-forecast-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Industry Performance Forecast</div>
+                    <div id="industry-forecast-chart"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Industries Tab -->
         <div id="industries" class="tab-content">
             <div class="charts-grid">
@@ -398,6 +525,28 @@
                 <div class="chart-container full-width">
                     <div class="chart-title">Industries vs Regions Heatmap</div>
                     <div id="industry-region-heatmap"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Philippines Map Tab -->
+        <div id="philippines-map" class="tab-content">
+            <div class="chart-container full-width">
+                <div class="chart-title">🇵🇭 Philippine Regional GDP Map</div>
+                <div class="map-container">
+                    <div id="philippines-gdp-map"></div>
+                </div>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Regional GDP Share</div>
+                    <div id="regional-share-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Provincial Contributions</div>
+                    <div id="provincial-chart"></div>
                 </div>
             </div>
         </div>
@@ -435,6 +584,14 @@
                         <strong>Manufacturing Leadership:</strong> The Manufacturing sector leads GDP contribution with
                         ₱3,250 billion, followed by Services (₱2,890 billion) and Agriculture (₱1,840 billion), showing
                         industrial strength.
+                    </div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-text">
+                        <strong>Predictive Analytics:</strong> Our forecasting models using Facebook Prophet indicate
+                        continued growth trends with Mining and Quarrying showing the highest projected growth rate
+                        at 39.1% for 2024-2025.
                     </div>
                 </div>
 
@@ -487,6 +644,29 @@
                 { name: 'Education', value: 760, growth: 2.9 }
             ],
 
+            // Forecasting data based on the Python script results
+            forecastData: {
+                industryGrowthRates: [
+                    { name: 'Mining and Quarrying', projected: 39.1 },
+                    { name: 'Human Health and Social Work Activities', projected: 30.8 },
+                    { name: 'Accommodation and Food Service Activities', projected: 29.1 },
+                    { name: 'Transportation and Storage', projected: 23.8 },
+                    { name: 'Construction', projected: 23.5 },
+                    { name: 'Agriculture, Forestry, and Fishing', projected: 18.7 },
+                    { name: 'Education', projected: 16.1 },
+                    { name: 'Professional and Business Services', projected: 12.6 },
+                    { name: 'Other Services', projected: 12.5 },
+                    { name: 'Manufacturing', projected: 9.4 }
+                ],
+                
+                regionalForecast: {
+                    years: [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027],
+                    ncr: [5814, 6294, 5801, 6158, 6892, 7572, 7321, 6993, 6440, 5665],
+                    calabarzon: [2707, 2866, 2565, 2786, 3140, 3436, 3283, 3164, 2963, 2682],
+                    centralLuzon: [2062, 2185, 1864, 2062, 2367, 2651, 2531, 2493, 2411, 2284]
+                }
+            },
+
             growthMatrix: [
                 ['NCR', 2018, 5.2], ['NCR', 2019, 4.8], ['NCR', 2020, -2.1], ['NCR', 2021, 3.4], ['NCR', 2022, 6.1], ['NCR', 2023, 5.8],
                 ['CALABARZON', 2018, 4.1], ['CALABARZON', 2019, 3.9], ['CALABARZON', 2020, -1.8], ['CALABARZON', 2021, 2.8], ['CALABARZON', 2022, 4.5], ['CALABARZON', 2023, 4.2],
@@ -525,7 +705,242 @@
             renderChartsForTab(tabName);
         }
 
-        // Chart rendering functions
+        // Forecasting functionality (simplified version of the Python script)
+        function generateForecast() {
+            const forecastType = document.getElementById('forecast-type').value;
+            const forecastYears = parseInt(document.getElementById('forecast-years').value);
+            const target = document.getElementById('forecast-target').value;
+
+            // Show loading
+            document.getElementById('forecast-chart').innerHTML = '<div class="loading">Generating forecast...</div>';
+
+            // Simulate forecast generation
+            setTimeout(() => {
+                createForecastChart(forecastType, forecastYears, target);
+                createGrowthForecastChart();
+                createIndustryForecastChart();
+            }, 1000);
+        }
+
+        function createForecastChart(type, years, target) {
+            let data, title;
+            
+            if (type === 'regional') {
+                const forecastData = gdpData.forecastData.regionalForecast;
+                const actualYears = forecastData.years.slice(0, 6);
+                const forecastYears = forecastData.years.slice(5);
+                
+                const traces = [
+                    {
+                        x: actualYears,
+                        y: forecastData.ncr.slice(0, 6),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'NCR (Actual)',
+                        line: { color: colors.primary, width: 3 }
+                    },
+                    {
+                        x: forecastYears,
+                        y: forecastData.ncr.slice(5),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'NCR (Forecast)',
+                        line: { color: colors.primary, dash: 'dash', width: 3 }
+                    },
+                    {
+                        x: actualYears,
+                        y: forecastData.calabarzon.slice(0, 6),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'CALABARZON (Actual)',
+                        line: { color: colors.secondary, width: 3 }
+                    },
+                    {
+                        x: forecastYears,
+                        y: forecastData.calabarzon.slice(5),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'CALABARZON (Forecast)',
+                        line: { color: colors.secondary, dash: 'dash', width: 3 }
+                    }
+                ];
+                
+                data = traces;
+                title = 'Regional GDP Forecast';
+            }
+
+            const layout = {
+                xaxis: { title: 'Year', color: colors.dark },
+                yaxis: { title: 'GDP (Billions ₱)', color: colors.dark },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: colors.dark, family: 'Segoe UI' },
+                margin: { t: 20, r: 20, b: 40, l: 60 },
+                showlegend: true
+            };
+
+            Plotly.newPlot('forecast-chart', data, layout, { responsive: true, displayModeBar: false });
+        }
+
+        function createGrowthForecastChart() {
+            const trace = {
+                x: gdpData.forecastData.industryGrowthRates.slice(0, 6).map(d => d.projected),
+                y: gdpData.forecastData.industryGrowthRates.slice(0, 6).map(d => d.name.split(',')[0]),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: gdpData.forecastData.industryGrowthRates.slice(0, 6).map((d, i) => colors.gradient[i]),
+                    line: { color: colors.primary, width: 1 }
+                }
+            };
+
+            const layout = {
+                xaxis: { title: 'Projected Growth Rate (%)', color: colors.dark },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: colors.dark, family: 'Segoe UI' },
+                margin: { t: 20, r: 20, b: 40, l: 150 }
+            };
+
+            Plotly.newPlot('growth-forecast-chart', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        function createIndustryForecastChart() {
+            const trace = {
+                labels: gdpData.forecastData.industryGrowthRates.slice(0, 8).map(d => d.name.split(',')[0]),
+                values: gdpData.forecastData.industryGrowthRates.slice(0, 8).map(d => d.projected),
+                type: 'pie',
+                hole: 0.4,
+                marker: { colors: colors.gradient },
+                textinfo: 'label+percent'
+            };
+
+            const layout = {
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: colors.dark, family: 'Segoe UI' },
+                showlegend: false,
+                margin: { t: 20, r: 20, b: 20, l: 20 }
+            };
+
+            Plotly.newPlot('industry-forecast-chart', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        // Philippines Map functionality
+        function createPhilippinesMap() {
+            // Simulated Philippine regional data
+            const philippineRegions = [
+                { region: 'NCR', lat: 14.5995, lon: 120.9842, gdp: 6890, share: 37.1 },
+                { region: 'CALABARZON', lat: 14.1000, lon: 121.0000, gdp: 2340, share: 12.6 },
+                { region: 'Central Luzon', lat: 15.4800, lon: 120.9700, gdp: 1890, share: 10.2 },
+                { region: 'Central Visayas', lat: 10.3157, lon: 123.8854, gdp: 1450, share: 7.8 },
+                { region: 'Western Visayas', lat: 10.7202, lon: 122.5621, gdp: 1120, share: 6.0 },
+                { region: 'Davao Region', lat: 7.1907, lon: 125.4553, gdp: 980, share: 5.3 },
+                { region: 'Northern Mindanao', lat: 8.4542, lon: 124.6319, gdp: 850, share: 4.6 },
+                { region: 'Ilocos Region', lat: 17.5739, lon: 120.3800, gdp: 720, share: 3.9 }
+            ];
+
+            const trace = {
+                type: 'scattergeo',
+                locationmode: 'geojson-id',
+                lat: philippineRegions.map(d => d.lat),
+                lon: philippineRegions.map(d => d.lon),
+                text: philippineRegions.map(d => `${d.region}<br>GDP: ₱${d.gdp}B<br>Share: ${d.share}%`),
+                mode: 'markers',
+                marker: {
+                    size: philippineRegions.map(d => Math.sqrt(d.gdp) * 2),
+                    color: philippineRegions.map(d => d.gdp),
+                    colorscale: 'Viridis',
+                    showscale: true,
+                    colorbar: {
+                        title: 'GDP (Billions ₱)',
+                        titleside: 'right'
+                    }
+                }
+            };
+
+            const layout = {
+                geo: {
+                    scope: 'asia',
+                    projection: { type: 'mercator' },
+                    center: { lat: 12.8797, lon: 121.7740 },
+                    lonaxis: { range: [116, 127] },
+                    lataxis: { range: [4, 21] },
+                    showland: true,
+                    landcolor: 'rgb(243, 243, 243)',
+                    coastlinecolor: 'rgb(204, 204, 204)',
+                    showlakes: true,
+                    lakecolor: 'rgb(255, 255, 255)',
+                    showsubunits: true,
+                    subunitcolor: 'rgb(217, 217, 217)'
+                },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: colors.dark, family: 'Segoe UI' },
+                margin: { t: 0, r: 0, b: 0, l: 0 }
+            };
+
+            Plotly.newPlot('philippines-gdp-map', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        function createRegionalShareChart() {
+            const trace = {
+                labels: gdpData.regionalData.map(d => d.name.split(' ')[0] + '...'),
+                values: gdpData.regionalData.map(d => d.value),
+                type: 'pie',
+                hole: 0.6,
+                marker: { colors: colors.gradient },
+                textinfo: 'label+percent',
+                textposition: 'outside'
+            };
+
+            const layout = {
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: colors.dark, family: 'Segoe UI' },
+                showlegend: false,
+                margin: { t: 20, r: 20, b: 20, l: 20 }
+            };
+
+            Plotly.newPlot('regional-share-chart', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        function createProvincialChart() {
+            // Sample provincial data
+            const provincialData = [
+                { name: 'Metro Manila', value: 6890 },
+                { name: 'Cavite', value: 890 },
+                { name: 'Laguna', value: 780 },
+                { name: 'Rizal', value: 670 },
+                { name: 'Bulacan', value: 650 },
+                { name: 'Batangas', value: 580 },
+                { name: 'Pampanga', value: 520 },
+                { name: 'Cebu', value: 890 }
+            ];
+
+            const trace = {
+                x: provincialData.map(d => d.name),
+                y: provincialData.map(d => d.value),
+                type: 'bar',
+                marker: {
+                    color: provincialData.map((d, i) => colors.gradient[i % colors.gradient.length]),
+                    line: { color: colors.primary, width: 1 }
+                }
+            };
+
+            const layout = {
+                xaxis: { title: 'Province/Metro', color: colors.dark },
+                yaxis: { title: 'GDP (Billions ₱)', color: colors.dark },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: colors.dark, family: 'Segoe UI' },
+                margin: { t: 20, r: 20, b: 60, l: 60 }
+            };
+
+            Plotly.newPlot('provincial-chart', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        // Chart rendering functions (existing functions remain the same)
         function createGDPTrendChart() {
             const trace = {
                 x: gdpData.nationalTrend.years,
@@ -653,7 +1068,6 @@
         }
 
         function createGrowthHeatmap() {
-            // Create matrix data
             const regions = ['NCR', 'CALABARZON', 'Central Luzon', 'Central Visayas'];
             const years = [2018, 2019, 2020, 2021, 2022, 2023];
             const zData = [
@@ -783,10 +1197,19 @@
                         createPerformanceComparisonChart();
                         createGrowthHeatmap();
                         break;
+                    case 'predictive':
+                        // Initialize with default forecast
+                        generateForecast();
+                        break;
                     case 'industries':
                         createIndustryTrendsChart();
                         createIndustryCompositionChart();
                         createIndustryRegionHeatmap();
+                        break;
+                    case 'philippines-map':
+                        createPhilippinesMap();
+                        createRegionalShareChart();
+                        createProvincialChart();
                         break;
                 }
             }, 100);
