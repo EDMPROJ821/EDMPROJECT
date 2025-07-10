@@ -378,15 +378,15 @@
         <!-- Header -->
         <div class="dashboard-header">
             <h1 class="dashboard-title">📊 GDP Analysis Dashboard</h1>
-            <p class="dashboard-subtitle">Philippine Economic Overview • Power BI Style • Data Year: 2023</p>
+            <p class="dashboard-subtitle">Philippine Economic Overview • Data Year: 2023</p>
         </div>
 
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('overview')">📈 Overview</button>
             <button class="nav-tab" onclick="showTab('regions')">🗺️ Regions</button>
+             <button class="nav-tab" onclick="showTab('industries')">🏭 Industries</button>
             <button class="nav-tab" onclick="showTab('predictive')">🔮 Predictive Model</button>
-            <button class="nav-tab" onclick="showTab('industries')">🏭 Industries</button>
             <button class="nav-tab flag-button" onclick="showTab('philippines-map')">PH Map</button>
             <button class="nav-tab" onclick="showTab('insights')">🔍 Insights</button>
         </div>
@@ -548,6 +548,16 @@
                     <div class="chart-title">Provincial Contributions</div>
                     <div id="provincial-chart"></div>
                 </div>
+            </div>
+
+            <div class="chart-container full-width">
+                <div class="chart-title">🇵🇭 Philippine Regional GDP Map</div>
+                <div class="map-container">
+                    <iframe src="Philippine_Region_GDP_Map.html"
+                    style="height: 550px; width: 100%; border: none;" frameborder="0" loading="lazy"></iframe>
+                </div>
+
+
             </div>
         </div>
 
