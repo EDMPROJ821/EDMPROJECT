@@ -315,7 +315,7 @@
             <button class="nav-tab" onclick="showTab('regions')">🗺️ Regions</button> 
             <button class="nav-tab" onclick="showTab('industries')">🏭 Industries</button>
             <button class="nav-tab" onclick="showTab('predictive')">🔮 Predictive Model</button>
-            <button class="nav-tab" onclick="showTab('philippines-map')">🇵🇭 Map</button>
+            <button class="nav-tab" onclick="showTab('philippines-map')">🇵🇭 PH Map</button>
             <button class="nav-tab" onclick="showTab('insights')">🔍 Insights</button>
         </div>
         <!-- Overview Tab -->
@@ -607,16 +607,11 @@
             const forecastType = document.getElementById('forecast-type').value;
             const forecastYears = parseInt(document.getElementById('forecast-years').value);
             const target = document.getElementById('forecast-target').value;
-            // Show loading for all forecast charts
-            document.getElementById('forecast-chart').innerHTML = '<div class="loading">Generating forecast...</div>';
-            document.getElementById('growth-forecast-chart').innerHTML = '<div class="loading">Generating forecast...</div>';
-            document.getElementById('industry-forecast-chart').innerHTML = '<div class="loading">Generating forecast...</div>';
-            // Simulate forecast generation
-            setTimeout(() => {
-                createForecastChart(forecastType, forecastYears, target);
-                createGrowthForecastChart();
-                createIndustryForecastChart();
-            }, 1500);
+            
+            // Generate forecast directly without loading message
+            createForecastChart(forecastType, forecastYears, target);
+            createGrowthForecastChart();
+            createIndustryForecastChart();
         }
         function createForecastChart(type, years, target) {
             let data, title;
