@@ -495,53 +495,70 @@ button.active {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+
 .data-source-box {
-  background: var(--ivory); /* Soft warm tone */
-  padding: 1.8rem 2rem;
-  border-left: 6px solid var(--crimson);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  margin: 40px auto;
+  background: var(--stone-gray); /* Soft neutral */
+  color: var(--deep-navy);
+  padding: 2rem 2.2rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  margin: 50px auto;
   max-width: 1000px;
-  color: #2c2c2c;
   font-family: 'Segoe UI', sans-serif;
+  transition: background 0.3s ease;
 }
 
 .data-source-box h4 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--deep-navy);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .data-source-box p {
   font-size: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   line-height: 1.6;
+  color: #2c2c2c;
 }
 
 .data-source-list {
   list-style: none;
-  padding-left: 0;
-  margin: 0;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 }
 
 .data-source-list li {
-  margin-bottom: 10px;
-  padding-left: 0;
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  padding: 10px 16px;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
 
-.data-source-box a {
+.data-source-list li:hover {
+  background-color: var(--crimson);
+}
+
+.data-source-list a {
   color: var(--deep-navy);
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
+  display: inline-block;
+  transition: color 0.3s ease;
 }
 
-.data-source-box a:hover {
-  color: var(--crimson);
-  text-decoration: underline;
+.data-source-list li:hover a {
+  color: #fffdf8;
 }
 
+.data-source-list a::before {
+  content: "🔗 ";
+}
 
 
 footer {
