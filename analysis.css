@@ -629,39 +629,55 @@ footer {
 }
 
 .card-red {
-  background: linear-gradient(135deg, var(--crimson), #7e1121);
-  color: #fffdf8;
-}
+  background: linear-gradient(135deg, #2A0A12, #4B0F1F, #731B30); /* Deep red wine to garnet */
+  color: #F3ECEC; /* Soft muted ivory for contrast */
+  box-shadow: 0 4px 14px rgba(43, 10, 18, 0.35); /* Subtle cabernet glow */
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(1px);
+  background-blend-mode: overlay;
 
-.card-gold {
-  background: linear-gradient(135deg, #C2A878, #bca16d);
-  /* muted gold */
 }
 
 .card-navy {
-  background: linear-gradient(135deg, #001C3D, #0b2b5a);
-  /* deep navy */
-  color: #fffdf8;
+  background: linear-gradient(135deg, #0F2027, #203A43, #2C5364); /* Midnight ocean-to-space tones */
+  color: #E6EDF2; /* Soft mist blue for better contrast */
+  box-shadow: 0 4px 15px rgba(0, 28, 61, 0.4); /* Deeper, elegant shadow */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle inner glow */
+  backdrop-filter: blur(2px);
+  background-blend-mode: overlay;
+
+}
+
+.card-teal {
+  background: linear-gradient(135deg, #16817A, #6FB3B8, #E4F9F5); /* Deep jade to misty aqua */
+  color: #002B36; /* A deep cyan-black for elegance */
+  box-shadow: 0 4px 14px rgba(22, 129, 122, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-blend-mode: overlay;
+
 }
 
 .card-rainbow {
   background: linear-gradient(135deg,
-      #ff9aa2,
-      /* pastel red */
-      #ffb7b2,
-      /* pastel coral */
-      #ffdac1,
-      /* pastel peach */
-      #e2f0cb,
-      /* pastel green */
-      #b5ead7,
-      /* pastel teal */
-      #c7ceea
-      /* pastel purple/blue */
-    );
+    #fad0c4,  /* soft coral pink */
+    #ffd1ff,  /* lilac pink */
+    #c2f0fc,  /* baby blue */
+    #d4fc79,  /* lime mist */
+    #96e6a1   /* mint green */
+  );
   color: #2b2b2b;
-  /* softer dark text for readability */
+  box-shadow: 0 4px 15px rgba(250, 200, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
+.card-red:hover,
+.card-teal:hover,
+.card-navy:hover,
+.card-rainbow:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+
 
 .card-back h3,
 .card-back p {
