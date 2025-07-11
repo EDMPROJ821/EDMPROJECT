@@ -1,18 +1,11 @@
 :root {
   --crimson: #A51C30;
-  /* Harvard Crimson */
   --deep-navy: #001C3D;
-  /* Harvard navy tone */
   --muted-gold: #C2A878;
-  /* Classic gold accent */
   --ivory: #F9F6F0;
-  /* Light academic ivory background */
   --stone-gray: #E3E3E3;
-  /* Neutral soft gray */
   --muted-teal: #708C91;
-  /* Toned down teal for info blocks */
   --danger-red: #B3001B;
-  /* Sharper warning */
 }
 
 footer,
@@ -112,7 +105,8 @@ nav ul li a.active {
 section {
   display: none;
   padding: 2rem;
-  background: linear-gradient(135deg, #FFFDF8 0%, #F5F3EE 100%);
+  /* background: linear-gradient(135deg, #FFFDF8 0%, #F5F3EE 100%); */
+  background: #F5F3EE;
   margin: 20px auto;
   border-radius: 10px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
@@ -124,6 +118,184 @@ section.active {
   display: block;
   animation: fadeIn 0.5s ease-in-out;
 }
+
+
+.gdp-stat-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.gdp-stat-boxes {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-teal) transparent;
+}
+
+.gdp-stat-boxes::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gdp-stat-boxes::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gdp-stat-boxes::-webkit-scrollbar-thumb {
+  background-color: var(--muted-teal);
+  border-radius: 10px;
+}
+
+.gdp-stat {
+  flex: 0 0 220px;
+  background: var(--ivory);
+  border: 1px solid var(--stone-gray);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.gdp-stat:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  background: #fefefe;
+}
+
+.gdp-stat h4 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  color: var(--deep-navy);
+  font-weight: 600;
+}
+
+.gdp-stat p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--crimson);
+}
+
+/* Optional tag accent or icon corner badge */
+.gdp-stat::before {
+  content: "ℹ️";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1rem;
+  opacity: 0.4;
+}
+
+.gdp-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Content Box */
+.gdp-modal-content {
+  background-color: #E0CBA8;
+  color: var(--deep-navy);
+  margin: 100px auto;
+  padding: 30px 25px;
+  border-radius: 14px;
+  max-width: 520px;
+  width: 90%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideUp 0.4s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Close Button */
+.gdp-modal .close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  color: var(--deep-navy);
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gdp-modal .close:hover {
+  background-color: var(--crimson);
+  color: #fffdf8;
+  transform: scale(1.05) rotate(90deg);
+}
+
+/* Text Elements */
+.gdp-modal-content h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: var(--deep-navy);
+  margin-bottom: 12px;
+}
+
+.gdp-modal-content p {
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.gdp-modal-content a {
+  color: var(--crimson);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.gdp-modal-content a:hover {
+  color: #600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 
 #dashboard {
@@ -323,34 +495,52 @@ button.active {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-
 .data-source-box {
-  background: #ffffff;
-  padding: 1.5rem 2rem;
-  border-left: 6px solid var(--deep-navy);
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  background: var(--ivory); /* Soft warm tone */
+  padding: 1.8rem 2rem;
+  border-left: 6px solid var(--crimson);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   margin: 40px auto;
-  max-width: 1200px;
-  color: #333;
+  max-width: 1000px;
+  color: #2c2c2c;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.data-source-box h3 {
-  font-family: 'Merriweather', serif;
+.data-source-box h4 {
+  font-size: 1.4rem;
   color: var(--deep-navy);
+  margin-bottom: 12px;
+}
+
+.data-source-box p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.data-source-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.data-source-list li {
+  margin-bottom: 10px;
+  padding-left: 0;
 }
 
 .data-source-box a {
   color: var(--deep-navy);
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .data-source-box a:hover {
-  color: #001C3D;
+  color: var(--crimson);
+  text-decoration: underline;
 }
-
 
 
 
@@ -428,26 +618,66 @@ footer {
 }
 
 .card-back {
-transform: rotateY(180deg);
-  background: linear-gradient(135deg, var(--crimson), #7e1121);
-  color: #fffdf8;
-
+  transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centers items vertically */
-  align-items: center;   /* Centers items horizontally */
-  text-align: center; 
+  justify-content: center;
+  /* Centers items vertically */
+  align-items: center;
+  /* Centers items horizontally */
+  text-align: center;
+}
+
+.card-red {
+  background: linear-gradient(135deg, var(--crimson), #7e1121);
+  color: #fffdf8;
+}
+
+.card-gold {
+  background: linear-gradient(135deg, #C2A878, #bca16d);
+  /* muted gold */
+}
+
+.card-navy {
+  background: linear-gradient(135deg, #001C3D, #0b2b5a);
+  /* deep navy */
+  color: #fffdf8;
+}
+
+.card-rainbow {
+  background: linear-gradient(135deg,
+      #ff9aa2,
+      /* pastel red */
+      #ffb7b2,
+      /* pastel coral */
+      #ffdac1,
+      /* pastel peach */
+      #e2f0cb,
+      /* pastel green */
+      #b5ead7,
+      /* pastel teal */
+      #c7ceea
+      /* pastel purple/blue */
+    );
+  color: #2b2b2b;
+  /* softer dark text for readability */
 }
 
 .card-back h3,
 .card-back p {
-  margin: 0; /* Remove any default margins that might be pushing them off-center */
-  padding: 0; /* Remove padding from h3 and p itself, let card-back padding handle spacing from edges */
+  margin: 0;
+  /* Remove any default margins that might be pushing them off-center */
+  padding: 0;
+  /* Remove padding from h3 and p itself, let card-back padding handle spacing from edges */
   /* Re-add specific horizontal padding if needed for text wrapping, but start with 0 */
-  /* padding: 0 10px; */ /* If you still want inner padding, but test without it first */
-  text-align: center; /* Important for centering the text within its own line */
-  width: 100%; /* Ensure h3 and p take full width to allow text-align: center to work properly */
-  box-sizing: border-box; /* Include padding/border in element's total width/height */
+  /* padding: 0 10px; */
+  /* If you still want inner padding, but test without it first */
+  text-align: center;
+  /* Important for centering the text within its own line */
+  width: 100%;
+  /* Ensure h3 and p take full width to allow text-align: center to work properly */
+  box-sizing: border-box;
+  /* Include padding/border in element's total width/height */
 }
 
 .card-back h3 {
@@ -477,7 +707,8 @@ transform: rotateY(180deg);
   flex-wrap: wrap;
   align-items: center;
   max-width: 1100px;
-  margin: 0 auto; /* This centers the entire ack-container */
+  margin: 0 auto;
+  /* This centers the entire ack-container */
   gap: 30px;
 }
 
@@ -489,7 +720,8 @@ transform: rotateY(180deg);
 }
 
 .ack-message {
-  flex: 1; /* This makes the ack-message div take up remaining horizontal space */
+  flex: 1;
+  /* This makes the ack-message div take up remaining horizontal space */
   color: var(--text-dark);
   /* DO NOT put text-align: center here, as it will affect h4 and p as well */
 }
@@ -499,10 +731,14 @@ transform: rotateY(180deg);
   color: var(--harvard-crimson);
   margin-bottom: 10px;
   /* --- The fix for h2 centering --- */
-  display: block; /* Ensure it behaves as a block element */
-  width: fit-content; /* Make the width only as large as its content */
-  margin-left: auto;   /* Push it to the center from the left */
-  margin-right: auto;  /* Push it to the center from the right */
+  display: block;
+  /* Ensure it behaves as a block element */
+  width: fit-content;
+  /* Make the width only as large as its content */
+  margin-left: auto;
+  /* Push it to the center from the left */
+  margin-right: auto;
+  /* Push it to the center from the right */
   /* Or shorthand: margin: 0 auto 10px auto; (to keep margin-bottom) */
 }
 
@@ -510,11 +746,13 @@ transform: rotateY(180deg);
   font-size: 1.2rem;
   color: var(--primary-navy);
   margin-bottom: 15px;
-  text-align: left; /* Ensure h4 remains left-aligned */
+  text-align: left;
+  /* Ensure h4 remains left-aligned */
 }
 
 .ack-message p {
   font-size: 1rem;
   line-height: 1.6;
-  text-align: left; /* Ensure p remains left-aligned */
+  text-align: left;
+  /* Ensure p remains left-aligned */
 }

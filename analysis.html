@@ -90,20 +90,168 @@
 
         <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
 
+        <!-- GDP STAT HIGHLIGHTS -->
+        <div class="gdp-stat-container">
+            <div class="gdp-stat-boxes">
+                <div class="gdp-stat" onclick="openModal('modal1')">
+                    <h4><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_the_Philippines.svg"
+                            alt="PH Flag"
+                            style="width: 20px; height: auto; vertical-align: middle; margin-right: 8px;">GDP
+                        Per Capita</h4>
+                    <p>$3,950 (2023)</p>
+                </div>
+                <div class="gdp-stat" onclick="openModal('modal2')">
+                    <h4>📈 GDP Growth (2023)</h4>
+                    <p>5.6%</p>
+                </div>
+                <div class="gdp-stat" onclick="openModal('modal3')">
+                    <h4>📊 Total GDP (2023)</h4>
+                    <p>$435 Billion</p>
+                </div>
+                <div class="gdp-stat" onclick="openModal('modal4')">
+                    <h4>🌏 Rank in Asia</h4>
+                    <p>12th out of 49</p>
+                </div>
+                <div class="gdp-stat" onclick="openModal('modal5')">
+                    <h4>🌐 Global GDP Rank</h4>
+                    <p>37th out of 196</p>
+                </div>
+                <div class="gdp-stat" onclick="openModal('modal6')">
+                    <h4>💰 GDP Per Capita Rank</h4>
+                    <p>127th out of 196</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal 1: GDP Per Capita -->
+        <div id="modal1" class="gdp-modal">
+            <div class="gdp-modal-content">
+                <span class="close" onclick="closeModal('modal1')">&times;</span>
+                <h3>GDP Per Capita (2023)</h3>
+                <p>
+                    GDP per capita represents the average economic output per person in the Philippines. It is
+                    calculated by dividing the country's total GDP by its population.
+                </p>
+                <p>
+                    For 2023, this value is approximately <strong>$3,950</strong>, reflecting a steady rise over recent
+                    years.
+                </p>
+                <p><strong>Source:</strong> <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=PH"
+                        target="_blank">World Bank</a></p>
+            </div>
+        </div>
+
+        <!-- Modal 2: GDP Growth -->
+        <div id="modal2" class="gdp-modal">
+            <div class="gdp-modal-content">
+                <span class="close" onclick="closeModal('modal2')">&times;</span>
+                <h3>GDP Growth Rate (2023)</h3>
+                <p>
+                    The Philippines recorded a <strong>5.6% GDP growth</strong> in 2023. This figure represents the
+                    year-over-year increase in total economic output.
+                </p>
+                <p>
+                    Despite global uncertainties, the Philippine economy showed resilience driven by strong domestic
+                    demand, infrastructure spending, and service sector recovery.
+                </p>
+                <p><strong>Source:</strong> <a
+                        href="https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG?locations=PH" target="_blank">World
+                        Bank</a></p>
+            </div>
+        </div>
+
+        <!-- Modal 3: Total GDP -->
+        <div id="modal3" class="gdp-modal">
+            <div class="gdp-modal-content">
+                <span class="close" onclick="closeModal('modal3')">&times;</span>
+                <h3>Total GDP (2023)</h3>
+                <p>
+                    The Philippine economy produced goods and services worth approximately <strong>$435 billion</strong>
+                    in 2023, based on current USD exchange rates and nominal GDP estimates.
+                </p>
+                <p>
+                    This total includes output from all industries: agriculture, manufacturing, construction, services,
+                    and more.
+                </p>
+                <p><strong>Source:</strong> <a href="https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=PH"
+                        target="_blank">World Bank</a></p>
+            </div>
+        </div>
+
+        <!-- Modal 4: Rank in Asia -->
+        <div id="modal4" class="gdp-modal">
+            <div class="gdp-modal-content">
+                <span class="close" onclick="closeModal('modal4')">&times;</span>
+                <h3>Asian GDP Rank</h3>
+                <p>
+                    The Philippines ranks <strong>12th out of 49 Asian countries</strong> based on nominal GDP as of
+                    2023.
+                </p>
+                <p>
+                    This ranking reflects the country's growing role in Southeast Asia’s regional economy, behind
+                    nations such as China, Japan, India, South Korea, and Indonesia.
+                </p>
+                <p><strong>Source:</strong> <a href="https://www.imf.org/en/Publications/WEO" target="_blank">IMF World
+                        Economic Outlook</a></p>
+            </div>
+        </div>
+
+        <!-- Modal 5: Global Rank -->
+        <div id="modal5" class="gdp-modal">
+            <div class="gdp-modal-content">
+                <span class="close" onclick="closeModal('modal5')">&times;</span>
+                <h3>Global GDP Ranking</h3>
+                <p>
+                    As of 2023, the Philippines is the <strong>37th largest economy out of 196 countries</strong>, based
+                    on nominal GDP.
+                </p>
+                <p>
+                    While still considered a developing economy, the Philippines is steadily moving up the ranks
+                    globally, due to sustained growth and population-driven expansion.
+                </p>
+                <p><strong>Source:</strong> <a href="https://www.worldometers.info/gdp/gdp-by-country/"
+                        target="_blank">Worldometer / IMF Estimates</a></p>
+            </div>
+        </div>
+
+
+        <!-- Modal 6: GDP Per Capita Rank -->
+        <div id="modal6" class="gdp-modal">
+            <div class="gdp-modal-content">
+                <span class="close" onclick="closeModal('modal6')">&times;</span>
+                <h3>GDP Per Capita Global Rank</h3>
+                <p>
+                    In terms of GDP per capita, the Philippines ranks approximately
+                    <strong>127th out of 196 countries</strong> in 2023.
+                </p>
+                <p>
+                    This ranking reflects average income per person and highlights the country’s position as a
+                    growing but still developing economy. While total GDP is rising, per capita growth is
+                    tempered by population size and income inequality.
+                </p>
+                <p><strong>Source:</strong> <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=PH"
+                        target="_blank">World Bank</a></p>
+            </div>
+        </div>
+
+        <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
+
         <nav class="data-source-box" aria-label="Data sources">
             <h4>📚 Data Sources</h4>
             <p>
                 The data used in this dashboard is sourced from the Philippine Statistics Authority (PSA) and the
-                OpenStat
-                portal, which provide comprehensive statistics on the country's economic performance.
-            <ul>
-                <li style="margin-bottom: 0px;"><a href="https://psa.gov.ph/statistics/grdp" target="_blank">Philippine
-                        Statistics Authority (PSA)</a></li>
-                <li><a href="https://openstat.psa.gov.ph/Database/Gross-Regional-Domestic-Product"
-                        target="_blank">OpenStat Portal</a></li>
-                <li><a href="https://gdpmap.com/?countries=PH" target="_blank">GDP Global Map</a></li>
+                OpenStat portal, which provide comprehensive statistics on the country's economic performance.
+            </p>
+            <ul class="data-source-list">
+                <li><a href="https://psa.gov.ph/statistics/grdp" target="_blank">📌 Philippine Statistics Authority
+                        (PSA)</a></li>
+                <li><a href="https://openstat.psa.gov.ph/Database/Gross-Regional-Domestic-Product" target="_blank">📌
+                        OpenStat Portal</a></li>
+                <li><a href="https://gdpmap.com/?countries=PH" target="_blank">📌 GDP Global Map</a></li>
             </ul>
         </nav>
+
 
         <hr style="border: none; height: 2px; background: #ccc; margin: 40px 0;">
     </section>
@@ -251,7 +399,10 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>In 2023, Trade; Repair of Motor Vehicles and Motorcycles topped the national GDP chart, contributing 18.3%—surpassing all other industries. Its dominance highlights the central role of consumer commerce and mobility services in driving economic activity, especially in urban centers where vehicle ownership and retail demand are highest.
+                    <p>In 2023, Trade; Repair of Motor Vehicles and Motorcycles topped the national GDP chart,
+                        contributing 18.3%—surpassing all other industries. Its dominance highlights the central role of
+                        consumer commerce and mobility services in driving economic activity, especially in urban
+                        centers where vehicle ownership and retail demand are highest.
                     </p>
                 </div>
             </div>
@@ -308,7 +459,9 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>Most regions contracted economically in 2020 but experienced a strong, broad-based rebound in 2021. Post-rebound, growth rates began to stabilize to more sustainable levels from 2022 onwards.</p>
+                    <p>Most regions contracted economically in 2020 but experienced a strong, broad-based rebound in
+                        2021. Post-rebound, growth rates began to stabilize to more sustainable levels from 2022
+                        onwards.</p>
                 </div>
             </div>
 
@@ -319,7 +472,8 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p> A distinct "V-shaped" recovery pattern is visible across all regions, marked by a sharp decline in 2020 followed by a rapid recovery that peaked in 2021-2022 before moderating.</p>
+                    <p> A distinct "V-shaped" recovery pattern is visible across all regions, marked by a sharp decline
+                        in 2020 followed by a rapid recovery that peaked in 2021-2022 before moderating.</p>
                 </div>
             </div>
 
@@ -330,7 +484,8 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>BARMM, Davao Region, and Western Visayas exhibit the highest average growth rates. Conversely, larger, more mature economies like CALABARZON and NCR show the slowest growth on average.</p>
+                    <p>BARMM, Davao Region, and Western Visayas exhibit the highest average growth rates. Conversely,
+                        larger, more mature economies like CALABARZON and NCR show the slowest growth on average.</p>
                 </div>
             </div>
 
@@ -341,7 +496,10 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>Financial & Insurance Activities continues to be a significant driver of growth across most regions. The resurgence of Accommodation & Food Services is propelling growth in tourism-centric areas. Furthermore, Mining and Quarrying demonstrates notable growth in specific regions, and Transportation and Storage also contributes to economic expansion in certain areas.</p>
+                    <p>Financial & Insurance Activities continues to be a significant driver of growth across most
+                        regions. The resurgence of Accommodation & Food Services is propelling growth in tourism-centric
+                        areas. Furthermore, Mining and Quarrying demonstrates notable growth in specific regions, and
+                        Transportation and Storage also contributes to economic expansion in certain areas.</p>
                 </div>
             </div>
 
@@ -352,7 +510,9 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>While provincial growth rates generally mirror regional trends, significant gaps exist. Some provinces dramatically outperform their regional average, while others lag, highlighting economic disparities even within regions.</p>
+                    <p>While provincial growth rates generally mirror regional trends, significant gaps exist. Some
+                        provinces dramatically outperform their regional average, while others lag, highlighting
+                        economic disparities even within regions.</p>
                 </div>
             </div>
         </div>
@@ -422,7 +582,10 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>BARMM’s GDP is forecasted to experience a brief dip in 2023, followed by strong growth momentum through 2026. The upward trajectory—with widening confidence intervals—signals optimistic development driven by possible investments and policy interventions, but also hints at underlying uncertainty in economic projections.</p>
+                    <p>BARMM’s GDP is forecasted to experience a brief dip in 2023, followed by strong growth momentum
+                        through 2026. The upward trajectory—with widening confidence intervals—signals optimistic
+                        development driven by possible investments and policy interventions, but also hints at
+                        underlying uncertainty in economic projections.</p>
                 </div>
             </div>
 
@@ -434,7 +597,10 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p> From 2024 to 2025, Central Luzon, Eastern Visayas, and Caraga are forecasted to lead regional growth with projected rates of 20% and above—positioning them as emerging economic powerhouses. Meanwhile, traditionally dominant regions like NCR and Davao show lower growth prospects, indicating a geographic shift in economic momentum toward previously less highlighted areas.</p>
+                    <p> From 2024 to 2025, Central Luzon, Eastern Visayas, and Caraga are forecasted to lead regional
+                        growth with projected rates of 20% and above—positioning them as emerging economic powerhouses.
+                        Meanwhile, traditionally dominant regions like NCR and Davao show lower growth prospects,
+                        indicating a geographic shift in economic momentum toward previously less highlighted areas.</p>
                 </div>
             </div>
 
@@ -445,7 +611,9 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>The Philippine GDP shows a strong projected rebound in 2025 after a significant dip in 2024, indicating a short-term recovery followed by a more stable, slower, growth trajectory, with the confidence interval highlighting inherent forecasting uncertainty.</p>
+                    <p>The Philippine GDP shows a strong projected rebound in 2025 after a significant dip in 2024,
+                        indicating a short-term recovery followed by a more stable, slower, growth trajectory, with the
+                        confidence interval highlighting inherent forecasting uncertainty.</p>
                 </div>
             </div>
 
@@ -474,7 +642,11 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>Mining and Quarrying is projected to be the leading growth sector by a significant margin for 2024-2025, with Human Health & Social Work and Accommodation & Food Services also anticipating strong expansion. Furthermore, Transportation & Storage and Construction are expected to see robust growth, while other sectors are forecast to experience more moderate to slower, but still positive, growth rates.</p>
+                    <p>Mining and Quarrying is projected to be the leading growth sector by a significant margin for
+                        2024-2025, with Human Health & Social Work and Accommodation & Food Services also anticipating
+                        strong expansion. Furthermore, Transportation & Storage and Construction are expected to see
+                        robust growth, while other sectors are forecast to experience more moderate to slower, but still
+                        positive, growth rates.</p>
                 </div>
             </div>
 
@@ -485,7 +657,10 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>The Philippine Total GDP shows a historical trend of consistent growth from 2018 to 2022, with a notable dip in 2020. A significant increase is projected from 2023 to 2024, followed by a slight moderation in growth into 2025, indicating a strong short-term recovery and then a more stable, although slower, growth trajectory.</p>
+                    <p>The Philippine Total GDP shows a historical trend of consistent growth from 2018 to 2022, with a
+                        notable dip in 2020. A significant increase is projected from 2023 to 2024, followed by a slight
+                        moderation in growth into 2025, indicating a strong short-term recovery and then a more stable,
+                        although slower, growth trajectory.</p>
                 </div>
             </div>
 
@@ -496,8 +671,14 @@
 
                 <div class="summary-box">
                     <h4>Key Insight:</h4>
-                    <p>Financial and Insurance Activities, Human Health and Social Work Activities, and Manufacturing, show a projected decline in GDP growth from 2023 to 2024, followed by a period of stabilization or slight recovery into 2025. Conversely, Mining and Quarrying is forecast to experience a slight drop in growth from 2023 to 2024, maintaining a high level through 2025, indicating it will be a major driver of economic expansion in the short term. Other sector like Accommodation and Food Service Activities appear to maintain a more consistent growth trajectory, although with some fluctuations.
-</p>
+                    <p>Financial and Insurance Activities, Human Health and Social Work Activities, and Manufacturing,
+                        show a projected decline in GDP growth from 2023 to 2024, followed by a period of stabilization
+                        or slight recovery into 2025. Conversely, Mining and Quarrying is forecast to experience a
+                        slight drop in growth from 2023 to 2024, maintaining a high level through 2025, indicating it
+                        will be a major driver of economic expansion in the short term. Other sector like Accommodation
+                        and Food Service Activities appear to maintain a more consistent growth trajectory, although
+                        with some fluctuations.
+                    </p>
                 </div>
             </div>
         </div>
@@ -564,7 +745,7 @@
                     <div class="card-front">
                         <img src="assets/Jp.jpg" alt="John Patrick">
                     </div>
-                    <div class="card-back">
+                    <div class="card-back card-navy">
                         <h3>John Patrick P. San Roque</h3>
                         <p>Project Manager and Developer</p>
                     </div>
@@ -577,7 +758,7 @@
                     <div class="card-front">
                         <img src="assets\phol.jpg" alt="Phol Mari Garcia">
                     </div>
-                    <div class="card-back">
+                    <div class="card-back card-red">
                         <h3>Phol Mari Garcia</h3>
                         <p>Chart Creation and Dashboard</p>
                     </div>
@@ -585,12 +766,12 @@
             </div>
 
             <!-- Team Member Card 3 -->
-            <div class="team-card">
+            <div class="team-card ">
                 <div class="card-inner">
                     <div class="card-front">
                         <img src="assets\kirk.png" alt="Kirk Nathaniel Gamorot">
                     </div>
-                    <div class="card-back">
+                    <div class="card-back card-rainbow">
                         <h3>Kirk Nathaniel Gamorot</h3>
                         <p>Analysis and Data Cleaning</p>
                     </div>
@@ -598,12 +779,12 @@
             </div>
 
             <!-- Team Member Card 4 -->
-            <div class="team-card">
+            <div class="team-card ">
                 <div class="card-inner">
                     <div class="card-front">
                         <img src="assets\ulan.jpg" alt="Kirk Nathaniel Gamorot">
                     </div>
-                    <div class="card-back">
+                    <div class="card-back card-gold">
                         <h3>Rainiel Cayabyab</h3>
                         <p>Analysis and Data Cleaning</p>
                     </div>

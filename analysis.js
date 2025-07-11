@@ -154,3 +154,21 @@ function fadeToTab(tabClass, contentClass) {
 
 // Example usage:
 fadeToTab('region-sub-tab', 'region-sub-content');
+
+  function openModal(id) {
+    document.getElementById(id).style.display = "block";
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  // Optional: close modal when clicking outside
+  window.onclick = function (event) {
+    const modals = document.querySelectorAll(".gdp-modal");
+    modals.forEach(modal => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
