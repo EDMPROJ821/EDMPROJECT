@@ -669,13 +669,6 @@ footer {
   box-shadow: 0 4px 15px rgba(250, 200, 255, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
-.card-red:hover,
-.card-teal:hover,
-.card-navy:hover,
-.card-rainbow:hover {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  transform: translateY(-4px);
-}
 
 
 
