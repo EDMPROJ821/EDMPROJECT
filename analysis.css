@@ -758,3 +758,11 @@ footer {
   line-height: 1.6;
   text-align: left;
 }
+
+
+.hr-divider {
+    border: none;
+    height: 2px;
+    background: #ccc;
+    margin: 40px 0;
+}
