@@ -392,7 +392,8 @@
                 <div class="control-group">
                     <label>Forecast Type:</label>
                     <select id="forecast-type">
-                        <option value="regional">Regional GDP</option>
+                        <option value="national">National GDP</option>
+                        <option value="industry">Industry</option>
                     </select>
                 </div>
                 <div class="control-group">
@@ -556,11 +557,15 @@
                     { name: 'Other Services', projected: 12.5 },
                     { name: 'Manufacturing', projected: 9.4 }
                 ],
-                regionalForecast: {
+                nationalForecast: {
                     years: [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027],
-                    ncr: [5814, 6294, 5801, 6158, 6892, 7572, 7321, 6993, 6440, 5665],
-                    calabarzon: [2707, 2866, 2565, 2786, 3140, 3436, 3283, 3164, 2963, 2682],
-                    centralLuzon: [2062, 2185, 1864, 2062, 2367, 2651, 2531, 2493, 2411, 2284]
+                    values: [15420, 16180, 14950, 15680, 17650, 18580, 19450, 20380, 21250, 22180]
+                },
+                industryForecast: {
+                    years: [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027],
+                    manufacturing: [2890, 3020, 2780, 2950, 3180, 3250, 3420, 3580, 3750, 3920],
+                    services: [2450, 2580, 2380, 2520, 2750, 2890, 3080, 3290, 3520, 3760],
+                    agriculture: [1650, 1720, 1580, 1680, 1780, 1840, 1920, 2010, 2100, 2190]
                 }
             },
             growthMatrix: [
@@ -598,65 +603,132 @@
         function generateForecast() {
             const forecastType = document.getElementById('forecast-type').value;
             const forecastYears = parseInt(document.getElementById('forecast-years').value);
-            
-            // Since we only have regional forecasting now, always use regional
-            createForecastChart('regional', forecastYears);
+                        
+            // Handle both national and industry forecasting
+            createForecastChart(forecastType, forecastYears);
             createGrowthForecastChart();
             createIndustryForecastChart();
         }
         function createForecastChart(type, years) {
-            const forecastData = gdpData.forecastData.regionalForecast;
-            const actualYears = forecastData.years.slice(0, 6);
-            
-            // Limit forecast years based on user input (max 3)
-            const maxForecastIndex = Math.min(6 + years, forecastData.years.length);
-            const forecastYears = forecastData.years.slice(5, maxForecastIndex);
-            
-            const traces = [
-                {
-                    x: actualYears,
-                    y: forecastData.ncr.slice(0, 6),
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    name: 'NCR (Actual)',
-                    line: { color: colors.primary, width: 3 }
-                },
-                {
-                    x: forecastYears,
-                    y: forecastData.ncr.slice(5, maxForecastIndex),
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    name: 'NCR (Forecast)',
-                    line: { color: colors.primary, dash: 'dash', width: 3 }
-                },
-                {
-                    x: actualYears,
-                    y: forecastData.calabarzon.slice(0, 6),
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    name: 'CALABARZON (Actual)',
-                    line: { color: colors.secondary, width: 3 }
-                },
-                {
-                    x: forecastYears,
-                    y: forecastData.calabarzon.slice(5, maxForecastIndex),
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    name: 'CALABARZON (Forecast)',
-                    line: { color: colors.secondary, dash: 'dash', width: 3 }
-                }
-            ];
-            
-            const layout = {
-                xaxis: { title: 'Year', color: colors.dark },
-                yaxis: { title: 'GDP (Billions ₱)', color: colors.dark },
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: colors.dark, family: 'Segoe UI' },
-                margin: { t: 20, r: 20, b: 40, l: 60 },
-                showlegend: true
-            };
-            Plotly.newPlot('forecast-chart', traces, layout, { responsive: true, displayModeBar: false });
+            if (type === 'national') {
+                // National GDP forecasting
+                const forecastData = gdpData.forecastData.nationalForecast;
+                const actualYears = forecastData.years.slice(0, 6);
+                
+                // Limit forecast years based on user input (max 3)
+                const maxForecastIndex = Math.min(6 + years, forecastData.years.length);
+                const forecastYears = forecastData.years.slice(5, maxForecastIndex);
+                
+                const traces = [
+                    {
+                        x: actualYears,
+                        y: forecastData.values.slice(0, 6),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'National GDP (Actual)',
+                        line: { color: colors.primary, width: 4 },
+                        marker: { size: 8 }
+                    },
+                    {
+                        x: forecastYears,
+                        y: forecastData.values.slice(5, maxForecastIndex),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'National GDP (Forecast)',
+                        line: { color: colors.primary, dash: 'dash', width: 4 },
+                        marker: { size: 8, symbol: 'diamond' }
+                    }
+                ];
+                
+                const layout = {
+                    title: 'National GDP Forecast (Philippines)',
+                    xaxis: { title: 'Year', color: colors.dark },
+                    yaxis: { title: 'GDP (Billions ₱)', color: colors.dark },
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: colors.dark, family: 'Segoe UI' },
+                    margin: { t: 40, r: 20, b: 40, l: 60 },
+                    showlegend: true
+                };
+                
+                Plotly.newPlot('forecast-chart', traces, layout, { responsive: true, displayModeBar: false });
+                
+            } else if (type === 'industry') {
+                // Industry forecasting at national level
+                const forecastData = gdpData.forecastData.industryForecast;
+                const actualYears = forecastData.years.slice(0, 6);
+                
+                // Limit forecast years based on user input (max 3)
+                const maxForecastIndex = Math.min(6 + years, forecastData.years.length);
+                const forecastYears = forecastData.years.slice(5, maxForecastIndex);
+                
+                const traces = [
+                    // Manufacturing
+                    {
+                        x: actualYears,
+                        y: forecastData.manufacturing.slice(0, 6),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Manufacturing (Actual)',
+                        line: { color: colors.primary, width: 3 }
+                    },
+                    {
+                        x: forecastYears,
+                        y: forecastData.manufacturing.slice(5, maxForecastIndex),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Manufacturing (Forecast)',
+                        line: { color: colors.primary, dash: 'dash', width: 3 }
+                    },
+                    // Services
+                    {
+                        x: actualYears,
+                        y: forecastData.services.slice(0, 6),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Services (Actual)',
+                        line: { color: colors.secondary, width: 3 }
+                    },
+                    {
+                        x: forecastYears,
+                        y: forecastData.services.slice(5, maxForecastIndex),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Services (Forecast)',
+                        line: { color: colors.secondary, dash: 'dash', width: 3 }
+                    },
+                    // Agriculture
+                    {
+                        x: actualYears,
+                        y: forecastData.agriculture.slice(0, 6),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Agriculture (Actual)',
+                        line: { color: colors.accent, width: 3 }
+                    },
+                    {
+                        x: forecastYears,
+                        y: forecastData.agriculture.slice(5, maxForecastIndex),
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Agriculture (Forecast)',
+                        line: { color: colors.accent, dash: 'dash', width: 3 }
+                    }
+                ];
+                
+                const layout = {
+                    title: 'National Industry GDP Forecast (Philippines)',
+                    xaxis: { title: 'Year', color: colors.dark },
+                    yaxis: { title: 'GDP (Billions ₱)', color: colors.dark },
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: colors.dark, family: 'Segoe UI' },
+                    margin: { t: 40, r: 20, b: 40, l: 60 },
+                    showlegend: true
+                };
+                
+                Plotly.newPlot('forecast-chart', traces, layout, { responsive: true, displayModeBar: false });
+            }
         }
         function createGrowthForecastChart() {
             const trace = {
