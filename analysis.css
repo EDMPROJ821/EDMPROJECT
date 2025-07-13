@@ -105,7 +105,6 @@ nav ul li a.active {
 section {
   display: none;
   padding: 2rem;
-  /* background: linear-gradient(135deg, #FFFDF8 0%, #F5F3EE 100%); */
   background: #F5F3EE;
   margin: 20px auto;
   border-radius: 10px;
@@ -182,7 +181,6 @@ section.active {
   color: var(--crimson);
 }
 
-/* Optional tag accent or icon corner badge */
 .gdp-stat::before {
   content: "ℹ️";
   position: absolute;
@@ -206,7 +204,6 @@ section.active {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Modal Content Box */
 .gdp-modal-content {
   background-color: #E0CBA8;
   color: var(--deep-navy);
@@ -221,7 +218,6 @@ section.active {
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Close Button */
 .gdp-modal .close {
   position: absolute;
   top: 14px;
@@ -248,7 +244,6 @@ section.active {
   transform: scale(1.05) rotate(90deg);
 }
 
-/* Text Elements */
 .gdp-modal-content h3 {
   margin-top: 0;
   font-size: 1.5rem;
@@ -273,7 +268,7 @@ section.active {
   color: #600;
 }
 
-/* Animations */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -497,7 +492,7 @@ button.active {
 
 
 .data-source-box {
-  background: var(--stone-gray); /* Soft neutral */
+  background: var(--stone-gray);
   color: var(--deep-navy);
   padding: 2rem 2.2rem;
   border-radius: 14px;
@@ -639,16 +634,14 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Centers items vertically */
   align-items: center;
-  /* Centers items horizontally */
   text-align: center;
 }
 
 .card-red {
-  background: linear-gradient(135deg, #2A0A12, #4B0F1F, #731B30); /* Deep red wine to garnet */
-  color: #F3ECEC; /* Soft muted ivory for contrast */
-  box-shadow: 0 4px 14px rgba(43, 10, 18, 0.35); /* Subtle cabernet glow */
+  background: linear-gradient(135deg, #2A0A12, #4B0F1F, #731B30); 
+  color: #F3ECEC; 
+  box-shadow: 0 4px 14px rgba(43, 10, 18, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(1px);
   background-blend-mode: overlay;
@@ -656,18 +649,18 @@ footer {
 }
 
 .card-navy {
-  background: linear-gradient(135deg, #0F2027, #203A43, #2C5364); /* Midnight ocean-to-space tones */
-  color: #E6EDF2; /* Soft mist blue for better contrast */
-  box-shadow: 0 4px 15px rgba(0, 28, 61, 0.4); /* Deeper, elegant shadow */
-  border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle inner glow */
+  background: linear-gradient(135deg, #0F2027, #203A43, #2C5364); 
+  color: #E6EDF2; 
+  box-shadow: 0 4px 15px rgba(0, 28, 61, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08); 
   backdrop-filter: blur(2px);
   background-blend-mode: overlay;
 
 }
 
 .card-teal {
-  background: linear-gradient(135deg, #16817A, #6FB3B8, #E4F9F5); /* Deep jade to misty aqua */
-  color: #002B36; /* A deep cyan-black for elegance */
+  background: linear-gradient(135deg, #16817A, #6FB3B8, #E4F9F5);
+  color: #002B36; 
   box-shadow: 0 4px 14px rgba(22, 129, 122, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background-blend-mode: overlay;
@@ -676,11 +669,11 @@ footer {
 
 .card-rainbow {
   background: linear-gradient(135deg,
-    #fad0c4,  /* soft coral pink */
-    #ffd1ff,  /* lilac pink */
-    #c2f0fc,  /* baby blue */
-    #d4fc79,  /* lime mist */
-    #96e6a1   /* mint green */
+    #fad0c4, 
+    #ffd1ff,  
+    #c2f0fc, 
+    #d4fc79,  
+    #96e6a1   
   );
   color: #2b2b2b;
   box-shadow: 0 4px 15px rgba(250, 200, 255, 0.2);
@@ -692,18 +685,10 @@ footer {
 .card-back h3,
 .card-back p {
   margin: 0;
-  /* Remove any default margins that might be pushing them off-center */
   padding: 0;
-  /* Remove padding from h3 and p itself, let card-back padding handle spacing from edges */
-  /* Re-add specific horizontal padding if needed for text wrapping, but start with 0 */
-  /* padding: 0 10px; */
-  /* If you still want inner padding, but test without it first */
   text-align: center;
-  /* Important for centering the text within its own line */
   width: 100%;
-  /* Ensure h3 and p take full width to allow text-align: center to work properly */
   box-sizing: border-box;
-  /* Include padding/border in element's total width/height */
 }
 
 .card-back h3 {
@@ -725,7 +710,6 @@ footer {
   padding: 80px 20px;
   background: var(--warm-ivory);
   border-top: 2px dashed rgba(0, 0, 0, 0.1);
-  /* Remove text-align: center from here, it's not needed for the h2's centering */
 }
 
 .ack-container {
@@ -734,8 +718,10 @@ footer {
   align-items: center;
   max-width: 1100px;
   margin: 0 auto;
-  /* This centers the entire ack-container */
   gap: 30px;
+  /* border: var(--deep-navy) solid 2px;
+  border-radius: 16px;
+  padding: 20px; */
 }
 
 .ack-image img {
@@ -747,25 +733,17 @@ footer {
 
 .ack-message {
   flex: 1;
-  /* This makes the ack-message div take up remaining horizontal space */
   color: var(--text-dark);
-  /* DO NOT put text-align: center here, as it will affect h4 and p as well */
 }
 
 .ack-message h2 {
   font-size: 2rem;
   color: var(--harvard-crimson);
   margin-bottom: 10px;
-  /* --- The fix for h2 centering --- */
   display: block;
-  /* Ensure it behaves as a block element */
   width: fit-content;
-  /* Make the width only as large as its content */
   margin-left: auto;
-  /* Push it to the center from the left */
   margin-right: auto;
-  /* Push it to the center from the right */
-  /* Or shorthand: margin: 0 auto 10px auto; (to keep margin-bottom) */
 }
 
 .ack-message h4 {
@@ -773,12 +751,10 @@ footer {
   color: var(--primary-navy);
   margin-bottom: 15px;
   text-align: left;
-  /* Ensure h4 remains left-aligned */
 }
 
 .ack-message p {
   font-size: 1rem;
   line-height: 1.6;
   text-align: left;
-  /* Ensure p remains left-aligned */
 }
